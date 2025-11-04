@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>幼儿绘本查询系统 - 幼儿园专用</title>
+    <title>幼儿绘本位置查询系统 - 杨凌高新第二幼儿园</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
     <style>
         * {
@@ -47,21 +47,13 @@
             color: #ff6b6b;
             margin-bottom: 10px;
             font-size: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
             text-shadow: 2px 2px 0px #ffe0d2;
         }
-        .title-icon {
-            font-size: 36px;
-        }
-        .subtitle {
-            color: #666;
-            font-size: 16px;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.5;
+        .title-line2 {
+            font-size: 24px;
+            color: #ff6b6b;
+            margin-top: -5px;
+            margin-bottom: 15px;
         }
         .search-box {
             display: flex;
@@ -397,14 +389,14 @@
             color: #666;
             font-weight: bold;
         }
-        .form-group input, .form-group textarea {
+        .form-group input, .form-group textarea, .form-group select {
             width: 100%;
             padding: 10px;
             border: 2px solid #ffd8cc;
             border-radius: 8px;
             font-size: 16px;
         }
-        .form-group input:focus, .form-group textarea:focus {
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
             border-color: #ff9e7d;
             outline: none;
         }
@@ -428,6 +420,67 @@
             background: #e0e0e0;
             color: #666;
         }
+        .delete-btn {
+            background: linear-gradient(135deg, #f44336, #e57373);
+            color: white;
+        }
+        
+        .delete-search-box {
+            display: flex;
+            margin-bottom: 15px;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.2);
+            border: 2px solid #ff9e7d;
+        }
+        .delete-search-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            font-size: 16px;
+            outline: none;
+            background-color: #fff9f5;
+        }
+        .delete-search-button {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #ff6b6b, #ff9e7d);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .delete-results {
+            margin-top: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 2px solid #ffd8cc;
+            border-radius: 10px;
+            padding: 10px;
+            background: white;
+        }
+        .delete-result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px dashed #ffd8cc;
+        }
+        .delete-result-item:last-child {
+            border-bottom: none;
+        }
+        .delete-result-info {
+            flex: 1;
+        }
+        .delete-result-title {
+            font-weight: bold;
+            color: #333;
+        }
+        .delete-result-location {
+            color: #ff6b6b;
+            font-size: 14px;
+        }
         
         @media (max-width: 600px) {
             body {
@@ -439,6 +492,9 @@
             }
             h1 {
                 font-size: 24px;
+            }
+            .title-line2 {
+                font-size: 20px;
             }
             .search-box {
                 flex-direction: column;
@@ -481,14 +537,28 @@
             .admin-controls {
                 flex-direction: column;
             }
+            .delete-search-box {
+                flex-direction: column;
+                border-radius: 20px;
+            }
+            .delete-search-input {
+                border-right: none;
+                border-bottom: none;
+                padding: 15px;
+            }
+            .delete-search-button {
+                border-radius: 0 0 15px 15px;
+                justify-content: center;
+                padding: 15px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1><span class="title-icon">📚</span>幼儿绘本位置查询系统</h1>
-            <p class="subtitle">输入书名关键词，快速查找绘本所在位置。专为幼儿园设计的绘本检索工具。</p>
+            <h1>杨凌高新第二幼儿园</h1>
+            <div class="title-line2">绘本查询系统</div>
         </header>
         
         <div class="decoration">
@@ -521,7 +591,7 @@
             <div class="feature-card">
                 <div class="feature-icon">📱</div>
                 <h4>简单易用</h4>
-                <p>老师家长都能用</p>
+                <p>杨凌高新第二幼儿园专用</p>
             </div>
         </div>
         
@@ -531,6 +601,7 @@
             
             <div class="admin-controls">
                 <button id="add-book-btn" class="admin-btn"><span>➕</span> 添加新书</button>
+                <button id="delete-book-btn" class="admin-btn"><span>🗑️</span> 删除书籍</button>
                 <button id="export-data-btn" class="admin-btn"><span>📥</span> 导出数据</button>
                 <button id="import-data-btn" class="admin-btn"><span>📤</span> 导入数据</button>
                 <button id="logout-btn" class="admin-btn"><span>🚪</span> 退出管理</button>
@@ -548,6 +619,19 @@
                 <div class="form-buttons">
                     <button id="save-book-btn" class="save-btn">保存</button>
                     <button id="cancel-book-btn" class="cancel-btn">取消</button>
+                </div>
+            </div>
+            
+            <div id="delete-book-form" class="admin-form">
+                <div class="delete-search-box">
+                    <input type="text" id="delete-search-input" class="delete-search-input" placeholder="搜索要删除的书籍...">
+                    <button id="delete-search-button" class="delete-search-button">搜索</button>
+                </div>
+                <div id="delete-search-results" class="delete-results">
+                    <!-- 搜索结果将在这里显示 -->
+                </div>
+                <div class="form-buttons">
+                    <button id="cancel-delete-btn" class="cancel-btn">取消</button>
                 </div>
             </div>
             
@@ -574,7 +658,8 @@
         </div>
         
         <footer>
-            <p>幼儿绘本位置查询系统 &copy; 2025 | 让找书变得更简单</p>
+            <!-- 修改后的页脚文字 -->
+            <p>杨凌高新第二幼儿园绘本查询系统 &copy; 2025 | 让找书变得更简单</p>
             <!-- 隐藏的管理员按钮 -->
             <button id="admin-toggle" class="admin-toggle">管理</button>
         </footer>
@@ -703,17 +788,25 @@
             const logoutBtn = document.getElementById('logout-btn');
             
             const addBookBtn = document.getElementById('add-book-btn');
+            const deleteBookBtn = document.getElementById('delete-book-btn');
             const exportDataBtn = document.getElementById('export-data-btn');
             const importDataBtn = document.getElementById('import-data-btn');
             const addBookForm = document.getElementById('add-book-form');
+            const deleteBookForm = document.getElementById('delete-book-form');
             const importDataForm = document.getElementById('import-data-form');
             const saveBookBtn = document.getElementById('save-book-btn');
             const cancelBookBtn = document.getElementById('cancel-book-btn');
+            const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
             const confirmImportBtn = document.getElementById('confirm-import-btn');
             const cancelImportBtn = document.getElementById('cancel-import-btn');
             const newBookTitle = document.getElementById('new-book-title');
             const newBookLocation = document.getElementById('new-book-location');
             const importData = document.getElementById('import-data');
+            
+            // 删除书籍相关元素
+            const deleteSearchInput = document.getElementById('delete-search-input');
+            const deleteSearchButton = document.getElementById('delete-search-button');
+            const deleteSearchResults = document.getElementById('delete-search-results');
             
             // 管理员密码 - 您可以修改这个密码
             const ADMIN_PASSWORD = "admin123";
@@ -844,11 +937,85 @@
                 }
             }
             
+            // 搜索要删除的书籍
+            function searchBooksToDelete() {
+                const searchTerm = deleteSearchInput.value.trim().toLowerCase();
+                
+                // 清空之前的结果
+                deleteSearchResults.innerHTML = '';
+                
+                if (searchTerm === '') {
+                    deleteSearchResults.innerHTML = '<div class="no-results">请输入搜索关键词</div>';
+                    return;
+                }
+                
+                // 过滤匹配的结果
+                const results = bookData.filter(book => 
+                    book.title.toLowerCase().includes(searchTerm)
+                );
+                
+                // 显示结果
+                if (results.length === 0) {
+                    deleteSearchResults.innerHTML = '<div class="no-results">未找到匹配的绘本</div>';
+                } else {
+                    results.forEach((book, index) => {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'delete-result-item';
+                        
+                        // 高亮显示关键词
+                        const highlightedTitle = book.title.replace(
+                            new RegExp(searchTerm, 'gi'), 
+                            match => `<span class="highlight">${match}</span>`
+                        );
+                        
+                        resultItem.innerHTML = `
+                            <div class="delete-result-info">
+                                <div class="delete-result-title">${highlightedTitle}</div>
+                                <div class="delete-result-location">${book.location}</div>
+                            </div>
+                            <button class="delete-btn delete-specific-book" data-index="${bookData.findIndex(b => b.title === book.title && b.location === book.location)}">删除</button>
+                        `;
+                        
+                        deleteSearchResults.appendChild(resultItem);
+                    });
+                    
+                    // 为删除按钮添加事件监听
+                    document.querySelectorAll('.delete-specific-book').forEach(button => {
+                        button.addEventListener('click', function() {
+                            const index = parseInt(this.getAttribute('data-index'));
+                            deleteSpecificBook(index);
+                        });
+                    });
+                }
+            }
+            
+            // 删除特定书籍
+            function deleteSpecificBook(index) {
+                if (index >= 0 && index < bookData.length) {
+                    const book = bookData[index];
+                    if (confirm(`确定要删除《${book.title}》吗？`)) {
+                        bookData.splice(index, 1);
+                        saveData();
+                        alert('书籍删除成功！');
+                        // 重新搜索以更新结果
+                        searchBooksToDelete();
+                    }
+                }
+            }
+            
             // 绑定事件
             searchButton.addEventListener('click', performSearch);
             searchInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     performSearch();
+                }
+            });
+            
+            // 删除书籍搜索事件
+            deleteSearchButton.addEventListener('click', searchBooksToDelete);
+            deleteSearchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchBooksToDelete();
                 }
             });
             
@@ -880,13 +1047,24 @@
                 
                 // 隐藏所有表单
                 addBookForm.classList.remove('active');
+                deleteBookForm.classList.remove('active');
                 importDataForm.classList.remove('active');
             });
             
             // 数据管理事件
             addBookBtn.addEventListener('click', function() {
                 addBookForm.classList.toggle('active');
+                deleteBookForm.classList.remove('active');
                 importDataForm.classList.remove('active');
+            });
+            
+            deleteBookBtn.addEventListener('click', function() {
+                deleteBookForm.classList.toggle('active');
+                addBookForm.classList.remove('active');
+                importDataForm.classList.remove('active');
+                // 清空删除搜索
+                deleteSearchInput.value = '';
+                deleteSearchResults.innerHTML = '<div class="no-results">请输入关键词搜索要删除的书籍</div>';
             });
             
             exportDataBtn.addEventListener('click', exportData);
@@ -894,6 +1072,7 @@
             importDataBtn.addEventListener('click', function() {
                 importDataForm.classList.toggle('active');
                 addBookForm.classList.remove('active');
+                deleteBookForm.classList.remove('active');
             });
             
             saveBookBtn.addEventListener('click', addNewBook);
@@ -902,6 +1081,12 @@
                 addBookForm.classList.remove('active');
                 newBookTitle.value = '';
                 newBookLocation.value = '';
+            });
+            
+            cancelDeleteBtn.addEventListener('click', function() {
+                deleteBookForm.classList.remove('active');
+                deleteSearchInput.value = '';
+                deleteSearchResults.innerHTML = '';
             });
             
             confirmImportBtn.addEventListener('click', importNewData);
