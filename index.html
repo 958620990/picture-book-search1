@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>幼儿绘本位置查询系统 - 图画书搜索平台</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%);
+            padding: 20px;
+            color: #333;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #4a6baf, #6a89cc, #4a6baf);
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        h1 {
+            color: #4a6baf;
+            margin-bottom: 10px;
+            font-size: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .title-icon {
+            font-size: 36px;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        .search-box {
+            display: flex;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(74, 107, 175, 0.2);
+            transition: all 0.3s ease;
+        }
+        .search-box:focus-within {
+            box-shadow: 0 5px 20px rgba(74, 107, 175, 0.3);
+            transform: translateY(-2px);
+        }
+        #search-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #ddd;
+            border-right: none;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+            background-color: #f9f9f9;
+        }
+        #search-input:focus {
+            border-color: #4a6baf;
+            background-color: white;
+        }
+        #search-button {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #4a6baf, #6a89cc);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        #search-button:hover {
+            background: linear-gradient(135deg, #3a5a9f, #5a79bc);
+        }
+        .search-info {
+            margin-top: 10px;
+            color: #666;
+            font-size: 14px;
+            text-align: center;
+            min-height: 20px;
+        }
+        .result-container {
+            margin-top: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        .result-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .result-item:hover {
+            background-color: #f8faff;
+        }
+        .book-title {
+            font-weight: bold;
+            color: #333;
+            flex: 1;
+        }
+        .book-location {
+            color: #4a6baf;
+            font-weight: bold;
+            background-color: #e8efff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            margin-left: 15px;
+            white-space: nowrap;
+            font-size: 14px;
+            border: 1px solid #d1ddff;
+        }
+        .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: #777;
+            font-size: 16px;
+        }
+        .highlight {
+            background-color: #fff9c4;
+            padding: 0 2px;
+            border-radius: 2px;
+            font-weight: bold;
+        }
+        .instructions {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            font-size: 14px;
+            color: #555;
+            border-left: 4px solid #4a6baf;
+        }
+        .instructions h3 {
+            margin-bottom: 12px;
+            color: #4a6baf;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .instructions ul {
+            padding-left: 20px;
+        }
+        .instructions li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        .qr-section {
+            text-align: center;
+            margin-top: 40px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+        }
+        .qr-section h3 {
+            color: #4a6baf;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        #qrcode-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 15px;
+        }
+        #generate-qr-btn {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #4a6baf, #6a89cc);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 3px 10px rgba(74, 107, 175, 0.3);
+        }
+        #generate-qr-btn:hover {
+            background: linear-gradient(135deg, #3a5a9f, #5a79bc);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 107, 175, 0.4);
+        }
+        #download-qr-btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #28a745, #34ce57);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 15px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        #download-qr-btn:hover {
+            background: linear-gradient(135deg, #218838, #2db44d);
+        }
+        .feature-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+        .feature-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border: 1px solid #f0f0f0;
+        }
+        .feature-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #4a6baf;
+        }
+        .feature-card h4 {
+            color: #4a6baf;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        .feature-card p {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #888;
+            font-size: 14px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 15px;
+            }
+            h1 {
+                font-size: 26px;
+            }
+            .search-box {
+                flex-direction: column;
+            }
+            #search-input {
+                border-right: 2px solid #ddd;
+                border-bottom: none;
+            }
+            #search-button {
+                border-radius: 0 0 10px 10px;
+                justify-content: center;
+            }
+            .result-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .book-location {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+            .feature-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><span class="title-icon">📚</span>幼儿绘本位置查询系统</h1>
+            <p class="subtitle">输入书名关键词，快速查找绘本所在位置。专为幼儿园、图书馆和家庭设计的绘本检索工具。</p>
+        </header>
+        
+        <div class="feature-section">
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h4>快速搜索</h4>
+                <p>输入关键词即可查找，支持模糊匹配</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📍</div>
+                <h4>精确定位</h4>
+                <p>显示绘本具体位置，方便查找</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h4>移动友好</h4>
+                <p>响应式设计，手机电脑都能用</p>
+            </div>
+        </div>
+        
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="输入书名关键词，如：三个强盗、恐龙大百科...">
+            <button id="search-button"><span>🔍</span> 搜索</button>
+        </div>
+        
+        <div id="search-info" class="search-info"></div>
+        
+        <div id="result-container" class="result-container">
+            <div class="no-results">请输入关键词搜索绘本位置</div>
+        </div>
+        
+        <div class="instructions">
+            <h3><span>💡</span> 使用说明</h3>
+            <ul>
+                <li>输入绘本名称的关键词即可搜索，无需输入完整书名</li>
+                <li>搜索结果会显示绘本名称和所在位置（柜号和编号）</li>
+                <li>支持模糊搜索，如输入"恐龙"可找到所有包含"恐龙"的绘本</li>
+                <li>搜索结果中匹配的关键词会高亮显示</li>
+                <li>点击"生成二维码"按钮，可用手机扫描随时访问此系统</li>
+            </ul>
+        </div>
+        
+        <div class="qr-section">
+            <h3><span>📱</span> 手机扫码，随时查书</h3>
+            <p>点击下方按钮生成二维码，用手机扫描即可随时访问此查询系统</p>
+            <button id="generate-qr-btn"><span>🔲</span> 生成二维码</button>
+            <div id="qrcode-container"></div>
+        </div>
+        
+        <footer>
+            <p>幼儿绘本位置查询系统 &copy; 2025 | 让找书变得更简单</p>
+        </footer>
+    </div>
+
+    <!-- 引入 QRCode.js 库 -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    
+    <script>
+        // 等待DOM完全加载后再执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 完整绘本数据 - 基于用户提供的数据表
+            const bookData = [
+                { title: "原来世界如此美好", location: "柜3-1-1" },
+                { title: "国王爸爸", location: "柜3-1-2" },
+                { title: "三个强盗", location: "柜3-1-3" },
+                { title: "三个强盗", location: "柜3-1-4" },
+                { title: "三个强盗", location: "柜3-1-5" },
+                { title: "爱音乐的马可", location: "柜3-1-6" },
+                { title: "爱音乐的马可", location: "柜3-1-7" },
+                { title: "棕色的熊、棕色的熊你在干什么？，了一只猫", location: "柜3-1-8" },
+                { title: "巨人的翰", location: "柜3-1-9" },
+                { title: "梦是什么？", location: "柜3-1-10" },
+                { title: "雪娃娃莉莉", location: "柜3-1-11" },
+                { title: "小种子", location: "柜3-1-12" },
+                { title: "吉莉娅数星星", location: "柜3-1-13" },
+                { title: "本吉和菲菲", location: "柜3-1-14" },
+                { title: "风中的树叶", location: "柜3-1-15" },
+                { title: "在家里", location: "柜3-1-16" },
+                { title: "会飞的箱子", location: "柜3-1-17" },
+                { title: "花木兰", location: "柜3-1-18" },
+                { title: "森林精灵的舞蹈", location: "柜3-1-19" },
+                { title: "你睡不着吗？", location: "柜3-1-20" },
+                { title: "帽子里的小兔", location: "柜3-1-21" },
+                { title: "帽子里的小兔", location: "柜3-1-22" },
+                { title: "露露的秘密花园", location: "柜3-1-23" },
+                { title: "奇奇做南瓜饼", location: "柜3-1-24" },
+                { title: "躲猫猫大王", location: "柜3-1-25" },
+                { title: "躲猫猫大王", location: "柜3-1-26" },
+                { title: "躲猫猫大王", location: "柜3-1-27" },
+                { title: "躲猫猫大王", location: "柜3-1-28" },
+                { title: "躲猫猫大王", location: "柜3-1-29" },
+                { title: "躲猫猫大王", location: "柜3-1-30" },
+                { title: "神奇变身术", location: "柜3-1-31" },
+                { title: "神奇变身术", location: "柜3-1-32" },
+                { title: "金雕猎狼", location: "柜3-1-33" },
+                { title: "行吟诗人但丁", location: "柜3-1-34" },
+                { title: "再过10分钟就睡觉", location: "柜3-1-35" },
+                { title: "我爸爸", location: "柜3-1-36" },
+                { title: "小绿狼", location: "柜3-1-37" },
+                { title: "小绿狼", location: "柜3-1-38" },
+                { title: "小魔怪要上学", location: "柜3-1-39" },
+                { title: "小魔怪要上学", location: "柜3-1-40" },
+                { title: "母鸡的旅行", location: "柜3-2-1" },
+                { title: "迟到大王", location: "柜3-2-2" },
+                { title: "嘿，帮我传个话！", location: "柜3-2-3" },
+                { title: "老人和猫", location: "柜3-2-4" },
+                { title: "你能听见我的声音吗？", location: "柜3-2-5" },
+                { title: "给爸爸的吻", location: "柜3-2-6" },
+                { title: "我喜欢说晚安", location: "柜3-2-7" },
+                { title: "下雨天玩泥巴", location: "柜3-2-8" },
+                { title: "莫夫里太太家的怪物", location: "柜3-2-9" },
+                { title: "小女巫", location: "柜3-2-10" },
+                { title: "毛娜的眼睛", location: "柜3-2-11" },
+                { title: "我的地图书", location: "柜3-2-12" },
+                { title: "门兽", location: "柜3-2-13" },
+                { title: "大嗓门的爸爸", location: "柜3-2-14" },
+                { title: "圣诞节的礼物", location: "柜3-2-15" },
+                { title: "圣诞节的礼物", location: "柜3-2-16" },
+                { title: "红蘑菇", location: "柜3-2-17" },
+                { title: "雨河", location: "柜3-2-18" },
+                { title: "世界第一傻瓜和他的飞船", location: "柜3-2-19" },
+                { title: "了不起", location: "柜3-2-20" },
+                { title: "澡堂子", location: "柜3-2-21" },
+                { title: "鲁拉鲁先生请客", location: "柜3-2-22" },
+                { title: "数字在哪里", location: "柜3-2-23" },
+                { title: "数字在哪里", location: "柜3-2-24" },
+                { title: "数字在哪里", location: "柜3-2-25" },
+                { title: "数字在哪里", location: "柜3-2-26" },
+                { title: "数字在哪里", location: "柜3-2-27" },
+                { title: "明锣移山", location: "柜3-2-28" },
+                { title: "你看到我的小鸭了吗？", location: "柜3-2-29" },
+                { title: "三顶帽子几个人", location: "柜3-2-30" },
+                { title: "獾的礼物", location: "柜3-2-31" },
+                { title: "驿马", location: "柜3-2-32" },
+                { title: "神奇的蓝色水桶", location: "柜3-2-33" },
+                { title: "太阳晚上到哪里去了？", location: "柜3-2-34" },
+                { title: "敌人", location: "柜3-2-35" },
+                { title: "爸爸和我", location: "柜3-2-36" },
+                { title: "我爱妈妈", location: "柜3-2-37" },
+                { title: "大房子里的好工作", location: "柜3-2-38" },
+                { title: "蚯蚓的日记", location: "柜3-2-39" },
+                { title: "弗洛拉的火烈鸟", location: "柜3-2-40" },
+                { title: "爷爷的幸福口令", location: "柜3-2-41" },
+                { title: "一只聪明的笨狼", location: "柜3-2-42" },
+                { title: "动物量身高", location: "柜3-2-43" },
+                { title: "我们做朋友吧", location: "柜3-2-44" },
+                { title: "方块动物园", location: "柜3-2-45" },
+                { title: "啊~蜘蛛", location: "柜3-2-46" },
+                { title: "爱思考的青蛙——生命在哪里？", location: "柜3-3-1" },
+                { title: "孤独的巨人", location: "柜3-3-2" },
+                { title: "13楼有只恐龙", location: "柜3-3-3" },
+                { title: "微生物 看不见的魔术师", location: "柜3-3-4" },
+                { title: "失去声音的熊孩子", location: "柜3-3-5" },
+                { title: "海马先生", location: "柜3-3-6" },
+                { title: "爱吹气的云淘淘", location: "柜3-3-7" },
+                { title: "早安.城市", location: "柜3-3-8" },
+                { title: "海马先生", location: "柜3-3-9" },
+                { title: "小蝙蝠德林", location: "柜3-3-10" },
+                { title: "口袋狗", location: "柜3-3-11" },
+                { title: "口袋狗", location: "柜3-3-12" },
+                { title: "一只孤独的野兽", location: "柜3-3-13" },
+                { title: "树真好", location: "柜3-3-14" },
+                { title: "完美的朋友", location: "柜3-3-15" },
+                { title: "爬行动物和两栖动物", location: "柜3-3-16" },
+                { title: "MOO!牟！", location: "柜3-3-17" },
+                { title: "苹果树之歌", location: "柜3-3-18" },
+                { title: "驴小弟变石头", location: "柜3-3-19" },
+                { title: "一寸虫", location: "柜3-3-20" },
+                { title: "小猫头鹰的夜游", location: "柜3-3-21" },
+                { title: "恐龙爱内裤", location: "柜3-3-22" },
+                { title: "小魔怪要上学", location: "柜3-3-23" },
+                { title: "小绿狼", location: "柜3-3-24" },
+                { title: "最后一只老虎", location: "柜3-3-25" },
+                { title: "怪物来了", location: "柜4-1-1" },
+                { title: "打败大灰狼", location: "柜4-1-2" },
+                { title: "小老鼠亚历山大", location: "柜4-1-3" },
+                { title: "小熊不刷牙", location: "柜4-1-4" },
+                { title: "超人尼莫", location: "柜4-1-5" },
+                { title: "小熊艾米", location: "柜4-1-6" },
+                { title: "那只深南色的鸟是我爸爸", location: "柜4-1-7" },
+                { title: "是香的，还是臭的", location: "柜4-1-8" },
+                { title: "漏", location: "柜4-1-9" },
+                { title: "狼，鸭子和老鼠", location: "柜4-1-10" },
+                { title: "好妈妈好孩子", location: "柜4-1-11" },
+                { title: "好想大声告诉你", location: "柜4-1-12" },
+                { title: "南瓜汤", location: "柜4-1-13" },
+                { title: "胡椒南瓜汤", location: "柜4-1-14" },
+                { title: "最好喝的汤", location: "柜4-1-15" },
+                { title: "书之子", location: "柜4-1-16" },
+                { title: "狐狸先生的宴会", location: "柜4-1-17" },
+                { title: "狐狸先生的宴会", location: "柜4-1-18" },
+                { title: "1，2，3，数星星", location: "柜4-1-19" },
+                { title: "1，2，3，数星星", location: "柜4-1-20" },
+                { title: "完美的宠物", location: "柜4-1-21" },
+                { title: "完美的宠物", location: "柜4-1-22" },
+                { title: "完美的宠物", location: "柜4-1-23" },
+                { title: "飘着幽灵的小房子", location: "柜4-1-24" },
+                { title: "飘着幽灵的小房子", location: "柜4-1-25" },
+                { title: "最想做的事", location: "柜4-1-26" },
+                { title: "最想做的事", location: "柜4-1-27" },
+                { title: "旋风小鼹鼠", location: "柜4-1-28" },
+                { title: "长寿的动物", location: "柜4-1-29" },
+                { title: "指针三姐妹", location: "柜4-1-30" },
+                { title: "动物之最", location: "柜5-1-1" },
+                { title: "古代文明", location: "柜5-1-2" },
+                { title: "恐龙", location: "柜5-1-3" },
+                { title: "古代文明", location: "柜5-1-4" },
+                { title: "宇宙", location: "柜5-1-5" },
+                { title: "人体", location: "柜5-1-6" },
+                { title: "月下看猫头鹰", location: "柜5-1-7" },
+                { title: "野地上的花园", location: "柜5-1-8" },
+                { title: "小羊和蜘蛛", location: "柜5-1-9" },
+                { title: "我的绵阳是个大麻烦", location: "柜5-1-10" },
+                { title: "我们发现了一顶大帽子", location: "柜5-1-11" },
+                { title: "七彩下雨天", location: "柜5-1-12" },
+                { title: "可爱的动物", location: "柜5-1-13" },
+                { title: "我喜欢过年", location: "柜5-1-14" },
+                { title: "毛头小鹰", location: "柜5-1-15" },
+                { title: "三个强盗", location: "柜5-1-16" },
+                { title: "画一个星星给我", location: "柜5-1-17" },
+                { title: "月亮之歌", location: "柜5-1-18" },
+                { title: "进城", location: "柜5-1-19" },
+                { title: "森林", location: "柜5-1-20" },
+                { title: "带着鱼儿去旅行", location: "柜5-1-21" },
+                { title: "勇敢的克兰西", location: "柜5-1-22" },
+                { title: "会飞的抱抱", location: "柜5-1-23" },
+                { title: "成长梦幻宝典", location: "柜5-1-24" },
+                { title: "迪士尼公主之梦幻时分", location: "柜5-1-25" },
+                { title: "胖国王", location: "书架1-1" },
+                { title: "黑米走丢了", location: "书架1-2" },
+                { title: "大嘴狗", location: "书架1-3" },
+                { title: "我永远爱你", location: "书架1-4" },
+                { title: "小窝最温暖", location: "书架1-5" },
+                { title: "小黑鸟", location: "书架1-6" },
+                { title: "好安静的书", location: "书架1-7" },
+                { title: "不是那样，是这样的！", location: "书架1-8" },
+                { title: "棉婆婆睡不着", location: "书架1-9" },
+                { title: "胆小鬼威利", location: "书架1-10" },
+                { title: "屎壳郎的生日礼物", location: "书架1-11" },
+                { title: "爸爸，我怕", location: "书架1-12" },
+                { title: "爱是一捧浓浓的蜂蜜", location: "书架2-1" },
+                { title: "谁是第一名", location: "书架2-2" },
+                { title: "滑雪惊魂", location: "书架2-3" },
+                { title: "昆虫运动会", location: "书架2-4" },
+                { title: "昆虫音乐会", location: "书架2-5" },
+                { title: "我爱你", location: "书架2-6" },
+                { title: "阿立会穿裤子了", location: "书架2-7" },
+                { title: "我办法让自己不嫉妒", location: "书架2-8" },
+                { title: "妈妈的爱", location: "书架2-9" },
+                { title: "小乔逃跑了", location: "书架2-10" },
+                { title: "伊娃和丽莎", location: "书架2-11" },
+                { title: "南瓜汤", location: "书架2-12" },
+                { title: "跟着邮票去旅行", location: "书架3-1" },
+                { title: "莎娜的红毛衣", location: "书架3-2" },
+                { title: "莎娜的雪火车", location: "书架3-3" },
+                { title: "植树的男人", location: "书架3-4" },
+                { title: "老虎和猫", location: "书架3-5" },
+                { title: "同桌的阿达", location: "书架3-6" },
+                { title: "睡吧，我亲爱的宝贝", location: "书架3-7" },
+                { title: "怪老头来了", location: "书架3-8" },
+                { title: "魔法亲亲", location: "书架3-9" },
+                { title: "小老鼠的漫长一夜", location: "书架3-10" },
+                { title: "最后一只老虎", location: "书架3-11" },
+                { title: "打瞌睡的房子", location: "书架3-12" },
+                { title: "猪", location: "书架4-1" },
+                { title: "植树的男人", location: "书架4-2" },
+                { title: "门", location: "书架4-3" },
+                { title: "经典通话变变变", location: "书架4-4" },
+                { title: "棉婆婆睡不着", location: "书架4-5" },
+                { title: "约瑟芬想要跳舞", location: "书架4-6" },
+                { title: "游泳", location: "书架4-7" },
+                { title: "蚯蚓的日记荷塘月色", location: "书架4-8" },
+                { title: "蚯蚓的日记荷塘月色", location: "书架4-9" },
+                { title: "棕色熊棕色熊，你在看什么？", location: "书架4-10" },
+                { title: "嚓—嘭", location: "书架4-11" },
+                { title: "肚子里的肚子里的肚子里的老鼠", location: "书架4-12" }
+            ];
+
+            // 获取DOM元素
+            const searchInput = document.getElementById('search-input');
+            const searchButton = document.getElementById('search-button');
+            const resultContainer = document.getElementById('result-container');
+            const searchInfo = document.getElementById('search-info');
+            const generateQrBtn = document.getElementById('generate-qr-btn');
+            const qrcodeContainer = document.getElementById('qrcode-container');
+            
+            // 搜索功能
+            function performSearch() {
+                const searchTerm = searchInput.value.trim().toLowerCase();
+                
+                // 清空之前的结果
+                resultContainer.innerHTML = '';
+                searchInfo.textContent = '';
+                
+                if (searchTerm === '') {
+                    resultContainer.innerHTML = '<div class="no-results">请输入搜索关键词</div>';
+                    return;
+                }
+                
+                // 过滤匹配的结果
+                const results = bookData.filter(book => 
+                    book.title.toLowerCase().includes(searchTerm)
+                );
+                
+                // 显示结果
+                if (results.length === 0) {
+                    resultContainer.innerHTML = '<div class="no-results">未找到匹配的绘本</div>';
+                    searchInfo.textContent = `搜索"${searchTerm}"，未找到结果`;
+                } else {
+                    searchInfo.textContent = `搜索"${searchTerm}"，找到${results.length}个结果`;
+                    
+                    results.forEach(book => {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'result-item';
+                        
+                        // 高亮显示关键词
+                        const highlightedTitle = book.title.replace(
+                            new RegExp(searchTerm, 'gi'), 
+                            match => `<span class="highlight">${match}</span>`
+                        );
+                        
+                        resultItem.innerHTML = `
+                            <div class="book-title">${highlightedTitle}</div>
+                            <div class="book-location">${book.location}</div>
+                        `;
+                        
+                        resultContainer.appendChild(resultItem);
+                    });
+                }
+            }
+            
+            // 生成二维码功能
+            function generateQRCode() {
+                // 获取当前页面的完整网址
+                const websiteUrl = window.location.href;
+                
+                // 清空之前可能生成的二维码
+                qrcodeContainer.innerHTML = '';
+                
+                // 创建canvas元素
+                const canvas = document.createElement('canvas');
+                qrcodeContainer.appendChild(canvas);
+                
+                // 使用 QRCode.js 生成二维码
+                QRCode.toCanvas(canvas, websiteUrl, {
+                    width: 200,
+                    margin: 2,
+                    color: {
+                        dark: '#4a6baf',
+                        light: '#FFFFFF'
+                    }
+                }, function (error) {
+                    if (error) {
+                        console.error(error);
+                        qrcodeContainer.innerHTML = '<p style="color: red;">生成二维码失败，请重试。</p>';
+                    } else {
+                        console.log('二维码生成成功！');
+                        
+                        // 添加下载按钮
+                        const downloadBtn = document.createElement('button');
+                        downloadBtn.textContent = '📥 下载二维码';
+                        downloadBtn.id = 'download-qr-btn';
+                        downloadBtn.addEventListener('click', function() {
+                            downloadQRCode(canvas);
+                        });
+                        qrcodeContainer.appendChild(downloadBtn);
+                    }
+                });
+            }
+            
+            // 下载二维码功能
+            function downloadQRCode(canvas) {
+                const link = document.createElement('a');
+                link.download = '绘本查询系统二维码.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }
+            
+            // 绑定事件
+            searchButton.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            generateQrBtn.addEventListener('click', generateQRCode);
+            
+            // 初始显示提示
+            resultContainer.innerHTML = '<div class="no-results">请输入关键词搜索绘本位置</div>';
+        });
+    </script>
+</body>
+</html>
