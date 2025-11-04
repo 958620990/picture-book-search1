@@ -188,65 +188,6 @@
             margin-bottom: 8px;
             line-height: 1.5;
         }
-        .qr-section {
-            text-align: center;
-            margin-top: 40px;
-            padding: 25px;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-radius: 10px;
-            border: 1px solid #e0e0e0;
-        }
-        .qr-section h3 {
-            color: #4a6baf;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        #qrcode-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 15px;
-        }
-        #generate-qr-btn {
-            padding: 12px 25px;
-            background: linear-gradient(135deg, #4a6baf, #6a89cc);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 3px 10px rgba(74, 107, 175, 0.3);
-        }
-        #generate-qr-btn:hover {
-            background: linear-gradient(135deg, #3a5a9f, #5a79bc);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(74, 107, 175, 0.4);
-        }
-        #download-qr-btn {
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #28a745, #34ce57);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-top: 15px;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        #download-qr-btn:hover {
-            background: linear-gradient(135deg, #218838, #2db44d);
-        }
         .feature-section {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -359,15 +300,7 @@
                 <li>搜索结果会显示绘本名称和所在位置（柜号和编号）</li>
                 <li>支持模糊搜索，如输入"恐龙"可找到所有包含"恐龙"的绘本</li>
                 <li>搜索结果中匹配的关键词会高亮显示</li>
-                <li>点击"生成二维码"按钮，可用手机扫描随时访问此系统</li>
             </ul>
-        </div>
-        
-        <div class="qr-section">
-            <h3><span>📱</span> 手机扫码，随时查书</h3>
-            <p>点击下方按钮生成二维码，用手机扫描即可随时访问此查询系统</p>
-            <button id="generate-qr-btn"><span>🔲</span> 生成二维码</button>
-            <div id="qrcode-container"></div>
         </div>
         
         <footer>
@@ -375,9 +308,6 @@
         </footer>
     </div>
 
-    <!-- 引入 QRCode.js 库 -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-    
     <script>
         // 等待DOM完全加载后再执行
         document.addEventListener('DOMContentLoaded', function() {
@@ -604,8 +534,6 @@
             const searchButton = document.getElementById('search-button');
             const resultContainer = document.getElementById('result-container');
             const searchInfo = document.getElementById('search-info');
-            const generateQrBtn = document.getElementById('generate-qr-btn');
-            const qrcodeContainer = document.getElementById('qrcode-container');
             
             // 搜索功能
             function performSearch() {
@@ -652,53 +580,6 @@
                 }
             }
             
-            // 生成二维码功能
-            function generateQRCode() {
-                // 获取当前页面的完整网址
-                const websiteUrl = window.location.href;
-                
-                // 清空之前可能生成的二维码
-                qrcodeContainer.innerHTML = '';
-                
-                // 创建canvas元素
-                const canvas = document.createElement('canvas');
-                qrcodeContainer.appendChild(canvas);
-                
-                // 使用 QRCode.js 生成二维码
-                QRCode.toCanvas(canvas, websiteUrl, {
-                    width: 200,
-                    margin: 2,
-                    color: {
-                        dark: '#4a6baf',
-                        light: '#FFFFFF'
-                    }
-                }, function (error) {
-                    if (error) {
-                        console.error(error);
-                        qrcodeContainer.innerHTML = '<p style="color: red;">生成二维码失败，请重试。</p>';
-                    } else {
-                        console.log('二维码生成成功！');
-                        
-                        // 添加下载按钮
-                        const downloadBtn = document.createElement('button');
-                        downloadBtn.textContent = '📥 下载二维码';
-                        downloadBtn.id = 'download-qr-btn';
-                        downloadBtn.addEventListener('click', function() {
-                            downloadQRCode(canvas);
-                        });
-                        qrcodeContainer.appendChild(downloadBtn);
-                    }
-                });
-            }
-            
-            // 下载二维码功能
-            function downloadQRCode(canvas) {
-                const link = document.createElement('a');
-                link.download = '绘本查询系统二维码.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            }
-            
             // 绑定事件
             searchButton.addEventListener('click', performSearch);
             searchInput.addEventListener('keypress', function(e) {
@@ -706,7 +587,6 @@
                     performSearch();
                 }
             });
-            generateQrBtn.addEventListener('click', generateQRCode);
             
             // 初始显示提示
             resultContainer.innerHTML = '<div class="no-results">请输入关键词搜索绘本位置</div>';
