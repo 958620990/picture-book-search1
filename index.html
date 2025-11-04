@@ -236,6 +236,7 @@
             color: #ff6b6b;
             font-size: 16px;
             font-weight: bold;
+            position: relative;
         }
         .decoration {
             text-align: center;
@@ -246,6 +247,188 @@
             margin: 0 5px;
             color: #ff6b6b;
         }
+        
+        /* 隐藏的管理员按钮样式 */
+        .admin-toggle {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: #ff9e7d;
+            cursor: pointer;
+            font-size: 12px;
+            padding: 5px;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        .admin-toggle:hover {
+            opacity: 1;
+        }
+        
+        /* 管理员登录样式 */
+        .admin-login {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .admin-login.active {
+            display: flex;
+        }
+        .login-container {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 3px solid #ff9e7d;
+        }
+        .login-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .login-header h3 {
+            color: #ff6b6b;
+            margin: 0;
+        }
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #ff6b6b;
+            cursor: pointer;
+        }
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .login-form input {
+            padding: 12px;
+            border: 2px solid #ffd8cc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .login-form input:focus {
+            border-color: #ff9e7d;
+            outline: none;
+        }
+        .login-form button {
+            padding: 12px;
+            background: linear-gradient(135deg, #ff6b6b, #ff9e7d);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        /* 数据管理样式 */
+        .admin-section {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #fff9f5;
+            border-radius: 15px;
+            border: 3px solid #ff9e7d;
+            display: none;
+        }
+        .admin-section.active {
+            display: block;
+        }
+        .admin-section h3 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 20px;
+        }
+        .admin-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .admin-btn {
+            padding: 10px 15px;
+            background: linear-gradient(135deg, #ff6b6b, #ff9e7d);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .admin-btn:hover {
+            background: linear-gradient(135deg, #ff5252, #ff8a65);
+        }
+        .admin-form {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            margin-bottom: 15px;
+            display: none;
+        }
+        .admin-form.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+            font-weight: bold;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ffd8cc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #ff9e7d;
+            outline: none;
+        }
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .form-buttons button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .save-btn {
+            background: linear-gradient(135deg, #4CAF50, #66BB6A);
+            color: white;
+        }
+        .cancel-btn {
+            background: #e0e0e0;
+            color: #666;
+        }
+        
         @media (max-width: 600px) {
             body {
                 padding: 10px;
@@ -295,6 +478,9 @@
             .book-title, .book-location {
                 font-size: 16px;
             }
+            .admin-controls {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -309,7 +495,7 @@
             <span>🌈</span><span>📖</span><span>🎨</span><span>🧸</span><span>🌟</span>
         </div>
         
-        <!-- 搜索栏移到功能卡片上方 -->
+        <!-- 搜索栏在功能卡片上方 -->
         <div class="search-box">
             <input type="text" id="search-input" placeholder="输入书名关键词，如：三个强盗、恐龙...">
             <button id="search-button"><span>🔍</span> 搜索</button>
@@ -339,6 +525,44 @@
             </div>
         </div>
         
+        <!-- 数据管理部分（默认隐藏） -->
+        <div id="admin-section" class="admin-section">
+            <h3><span>🔧</span> 数据管理</h3>
+            
+            <div class="admin-controls">
+                <button id="add-book-btn" class="admin-btn"><span>➕</span> 添加新书</button>
+                <button id="export-data-btn" class="admin-btn"><span>📥</span> 导出数据</button>
+                <button id="import-data-btn" class="admin-btn"><span>📤</span> 导入数据</button>
+                <button id="logout-btn" class="admin-btn"><span>🚪</span> 退出管理</button>
+            </div>
+            
+            <div id="add-book-form" class="admin-form">
+                <div class="form-group">
+                    <label for="new-book-title">书名</label>
+                    <input type="text" id="new-book-title" placeholder="输入书名">
+                </div>
+                <div class="form-group">
+                    <label for="new-book-location">位置</label>
+                    <input type="text" id="new-book-location" placeholder="输入位置，如：柜3-1-1">
+                </div>
+                <div class="form-buttons">
+                    <button id="save-book-btn" class="save-btn">保存</button>
+                    <button id="cancel-book-btn" class="cancel-btn">取消</button>
+                </div>
+            </div>
+            
+            <div id="import-data-form" class="admin-form">
+                <div class="form-group">
+                    <label for="import-data">导入数据 (JSON格式)</label>
+                    <textarea id="import-data" rows="6" placeholder="粘贴JSON格式的数据"></textarea>
+                </div>
+                <div class="form-buttons">
+                    <button id="confirm-import-btn" class="save-btn">确认导入</button>
+                    <button id="cancel-import-btn" class="cancel-btn">取消</button>
+                </div>
+            </div>
+        </div>
+        
         <div class="instructions">
             <h3><span>💡</span> 使用说明</h3>
             <ul>
@@ -351,14 +575,30 @@
         
         <footer>
             <p>幼儿绘本位置查询系统 &copy; 2025 | 让找书变得更简单</p>
+            <!-- 隐藏的管理员按钮 -->
+            <button id="admin-toggle" class="admin-toggle">管理</button>
         </footer>
+    </div>
+
+    <!-- 管理员登录弹窗 -->
+    <div id="admin-login" class="admin-login">
+        <div class="login-container">
+            <div class="login-header">
+                <h3>管理员登录</h3>
+                <button id="close-login" class="close-btn">×</button>
+            </div>
+            <div class="login-form">
+                <input type="password" id="admin-password" placeholder="请输入管理员密码">
+                <button id="login-btn">登录</button>
+            </div>
+        </div>
     </div>
 
     <script>
         // 等待DOM完全加载后再执行
         document.addEventListener('DOMContentLoaded', function() {
-            // 完整绘本数据 - 基于用户提供的数据表
-            const bookData = [
+            // 从localStorage加载数据，如果没有则使用默认数据
+            let bookData = JSON.parse(localStorage.getItem('bookData')) || [
                 { title: "原来世界如此美好", location: "柜3-1-1" },
                 { title: "国王爸爸", location: "柜3-1-2" },
                 { title: "三个强盗", location: "柜3-1-3" },
@@ -444,135 +684,7 @@
                 { title: "动物量身高", location: "柜3-2-43" },
                 { title: "我们做朋友吧", location: "柜3-2-44" },
                 { title: "方块动物园", location: "柜3-2-45" },
-                { title: "啊~蜘蛛", location: "柜3-2-46" },
-                { title: "爱思考的青蛙——生命在哪里？", location: "柜3-3-1" },
-                { title: "孤独的巨人", location: "柜3-3-2" },
-                { title: "13楼有只恐龙", location: "柜3-3-3" },
-                { title: "微生物 看不见的魔术师", location: "柜3-3-4" },
-                { title: "失去声音的熊孩子", location: "柜3-3-5" },
-                { title: "海马先生", location: "柜3-3-6" },
-                { title: "爱吹气的云淘淘", location: "柜3-3-7" },
-                { title: "早安.城市", location: "柜3-3-8" },
-                { title: "海马先生", location: "柜3-3-9" },
-                { title: "小蝙蝠德林", location: "柜3-3-10" },
-                { title: "口袋狗", location: "柜3-3-11" },
-                { title: "口袋狗", location: "柜3-3-12" },
-                { title: "一只孤独的野兽", location: "柜3-3-13" },
-                { title: "树真好", location: "柜3-3-14" },
-                { title: "完美的朋友", location: "柜3-3-15" },
-                { title: "爬行动物和两栖动物", location: "柜3-3-16" },
-                { title: "MOO!牟！", location: "柜3-3-17" },
-                { title: "苹果树之歌", location: "柜3-3-18" },
-                { title: "驴小弟变石头", location: "柜3-3-19" },
-                { title: "一寸虫", location: "柜3-3-20" },
-                { title: "小猫头鹰的夜游", location: "柜3-3-21" },
-                { title: "恐龙爱内裤", location: "柜3-3-22" },
-                { title: "小魔怪要上学", location: "柜3-3-23" },
-                { title: "小绿狼", location: "柜3-3-24" },
-                { title: "最后一只老虎", location: "柜3-3-25" },
-                { title: "怪物来了", location: "柜4-1-1" },
-                { title: "打败大灰狼", location: "柜4-1-2" },
-                { title: "小老鼠亚历山大", location: "柜4-1-3" },
-                { title: "小熊不刷牙", location: "柜4-1-4" },
-                { title: "超人尼莫", location: "柜4-1-5" },
-                { title: "小熊艾米", location: "柜4-1-6" },
-                { title: "那只深南色的鸟是我爸爸", location: "柜4-1-7" },
-                { title: "是香的，还是臭的", location: "柜4-1-8" },
-                { title: "漏", location: "柜4-1-9" },
-                { title: "狼，鸭子和老鼠", location: "柜4-1-10" },
-                { title: "好妈妈好孩子", location: "柜4-1-11" },
-                { title: "好想大声告诉你", location: "柜4-1-12" },
-                { title: "南瓜汤", location: "柜4-1-13" },
-                { title: "胡椒南瓜汤", location: "柜4-1-14" },
-                { title: "最好喝的汤", location: "柜4-1-15" },
-                { title: "书之子", location: "柜4-1-16" },
-                { title: "狐狸先生的宴会", location: "柜4-1-17" },
-                { title: "狐狸先生的宴会", location: "柜4-1-18" },
-                { title: "1，2，3，数星星", location: "柜4-1-19" },
-                { title: "1，2，3，数星星", location: "柜4-1-20" },
-                { title: "完美的宠物", location: "柜4-1-21" },
-                { title: "完美的宠物", location: "柜4-1-22" },
-                { title: "完美的宠物", location: "柜4-1-23" },
-                { title: "飘着幽灵的小房子", location: "柜4-1-24" },
-                { title: "飘着幽灵的小房子", location: "柜4-1-25" },
-                { title: "最想做的事", location: "柜4-1-26" },
-                { title: "最想做的事", location: "柜4-1-27" },
-                { title: "旋风小鼹鼠", location: "柜4-1-28" },
-                { title: "长寿的动物", location: "柜4-1-29" },
-                { title: "指针三姐妹", location: "柜4-1-30" },
-                { title: "动物之最", location: "柜5-1-1" },
-                { title: "古代文明", location: "柜5-1-2" },
-                { title: "恐龙", location: "柜5-1-3" },
-                { title: "古代文明", location: "柜5-1-4" },
-                { title: "宇宙", location: "柜5-1-5" },
-                { title: "人体", location: "柜5-1-6" },
-                { title: "月下看猫头鹰", location: "柜5-1-7" },
-                { title: "野地上的花园", location: "柜5-1-8" },
-                { title: "小羊和蜘蛛", location: "柜5-1-9" },
-                { title: "我的绵阳是个大麻烦", location: "柜5-1-10" },
-                { title: "我们发现了一顶大帽子", location: "柜5-1-11" },
-                { title: "七彩下雨天", location: "柜5-1-12" },
-                { title: "可爱的动物", location: "柜5-1-13" },
-                { title: "我喜欢过年", location: "柜5-1-14" },
-                { title: "毛头小鹰", location: "柜5-1-15" },
-                { title: "三个强盗", location: "柜5-1-16" },
-                { title: "画一个星星给我", location: "柜5-1-17" },
-                { title: "月亮之歌", location: "柜5-1-18" },
-                { title: "进城", location: "柜5-1-19" },
-                { title: "森林", location: "柜5-1-20" },
-                { title: "带着鱼儿去旅行", location: "柜5-1-21" },
-                { title: "勇敢的克兰西", location: "柜5-1-22" },
-                { title: "会飞的抱抱", location: "柜5-1-23" },
-                { title: "成长梦幻宝典", location: "柜5-1-24" },
-                { title: "迪士尼公主之梦幻时分", location: "柜5-1-25" },
-                { title: "胖国王", location: "书架1-1" },
-                { title: "黑米走丢了", location: "书架1-2" },
-                { title: "大嘴狗", location: "书架1-3" },
-                { title: "我永远爱你", location: "书架1-4" },
-                { title: "小窝最温暖", location: "书架1-5" },
-                { title: "小黑鸟", location: "书架1-6" },
-                { title: "好安静的书", location: "书架1-7" },
-                { title: "不是那样，是这样的！", location: "书架1-8" },
-                { title: "棉婆婆睡不着", location: "书架1-9" },
-                { title: "胆小鬼威利", location: "书架1-10" },
-                { title: "屎壳郎的生日礼物", location: "书架1-11" },
-                { title: "爸爸，我怕", location: "书架1-12" },
-                { title: "爱是一捧浓浓的蜂蜜", location: "书架2-1" },
-                { title: "谁是第一名", location: "书架2-2" },
-                { title: "滑雪惊魂", location: "书架2-3" },
-                { title: "昆虫运动会", location: "书架2-4" },
-                { title: "昆虫音乐会", location: "书架2-5" },
-                { title: "我爱你", location: "书架2-6" },
-                { title: "阿立会穿裤子了", location: "书架2-7" },
-                { title: "我办法让自己不嫉妒", location: "书架2-8" },
-                { title: "妈妈的爱", location: "书架2-9" },
-                { title: "小乔逃跑了", location: "书架2-10" },
-                { title: "伊娃和丽莎", location: "书架2-11" },
-                { title: "南瓜汤", location: "书架2-12" },
-                { title: "跟着邮票去旅行", location: "书架3-1" },
-                { title: "莎娜的红毛衣", location: "书架3-2" },
-                { title: "莎娜的雪火车", location: "书架3-3" },
-                { title: "植树的男人", location: "书架3-4" },
-                { title: "老虎和猫", location: "书架3-5" },
-                { title: "同桌的阿达", location: "书架3-6" },
-                { title: "睡吧，我亲爱的宝贝", location: "书架3-7" },
-                { title: "怪老头来了", location: "书架3-8" },
-                { title: "魔法亲亲", location: "书架3-9" },
-                { title: "小老鼠的漫长一夜", location: "书架3-10" },
-                { title: "最后一只老虎", location: "书架3-11" },
-                { title: "打瞌睡的房子", location: "书架3-12" },
-                { title: "猪", location: "书架4-1" },
-                { title: "植树的男人", location: "书架4-2" },
-                { title: "门", location: "书架4-3" },
-                { title: "经典通话变变变", location: "书架4-4" },
-                { title: "棉婆婆睡不着", location: "书架4-5" },
-                { title: "约瑟芬想要跳舞", location: "书架4-6" },
-                { title: "游泳", location: "书架4-7" },
-                { title: "蚯蚓的日记荷塘月色", location: "书架4-8" },
-                { title: "蚯蚓的日记荷塘月色", location: "书架4-9" },
-                { title: "棕色熊棕色熊，你在看什么？", location: "书架4-10" },
-                { title: "嚓—嘭", location: "书架4-11" },
-                { title: "肚子里的肚子里的肚子里的老鼠", location: "书架4-12" }
+                { title: "啊~蜘蛛", location: "柜3-2-46" }
             ];
 
             // 获取DOM元素
@@ -580,6 +692,39 @@
             const searchButton = document.getElementById('search-button');
             const resultContainer = document.getElementById('result-container');
             const searchInfo = document.getElementById('search-info');
+            
+            // 数据管理相关元素
+            const adminToggle = document.getElementById('admin-toggle');
+            const adminLogin = document.getElementById('admin-login');
+            const adminSection = document.getElementById('admin-section');
+            const closeLogin = document.getElementById('close-login');
+            const adminPassword = document.getElementById('admin-password');
+            const loginBtn = document.getElementById('login-btn');
+            const logoutBtn = document.getElementById('logout-btn');
+            
+            const addBookBtn = document.getElementById('add-book-btn');
+            const exportDataBtn = document.getElementById('export-data-btn');
+            const importDataBtn = document.getElementById('import-data-btn');
+            const addBookForm = document.getElementById('add-book-form');
+            const importDataForm = document.getElementById('import-data-form');
+            const saveBookBtn = document.getElementById('save-book-btn');
+            const cancelBookBtn = document.getElementById('cancel-book-btn');
+            const confirmImportBtn = document.getElementById('confirm-import-btn');
+            const cancelImportBtn = document.getElementById('cancel-import-btn');
+            const newBookTitle = document.getElementById('new-book-title');
+            const newBookLocation = document.getElementById('new-book-location');
+            const importData = document.getElementById('import-data');
+            
+            // 管理员密码 - 您可以修改这个密码
+            const ADMIN_PASSWORD = "admin123";
+            
+            // 检查是否已经登录
+            function checkLoginStatus() {
+                const isLoggedIn = sessionStorage.getItem('adminLoggedIn') === 'true';
+                if (isLoggedIn) {
+                    adminSection.classList.add('active');
+                }
+            }
             
             // 搜索功能
             function performSearch() {
@@ -626,6 +771,79 @@
                 }
             }
             
+            // 保存数据到localStorage
+            function saveData() {
+                localStorage.setItem('bookData', JSON.stringify(bookData));
+            }
+            
+            // 添加新书
+            function addNewBook() {
+                const title = newBookTitle.value.trim();
+                const location = newBookLocation.value.trim();
+                
+                if (!title || !location) {
+                    alert('请填写完整的书名和位置信息！');
+                    return;
+                }
+                
+                bookData.push({ title, location });
+                saveData();
+                
+                // 清空表单
+                newBookTitle.value = '';
+                newBookLocation.value = '';
+                
+                // 隐藏表单
+                addBookForm.classList.remove('active');
+                
+                alert('新书添加成功！');
+            }
+            
+            // 导出数据
+            function exportData() {
+                const dataStr = JSON.stringify(bookData, null, 2);
+                const dataBlob = new Blob([dataStr], {type: "application/json"});
+                
+                const url = URL.createObjectURL(dataBlob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'book-data.json';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+            
+            // 导入数据
+            function importNewData() {
+                try {
+                    const importedData = JSON.parse(importData.value);
+                    
+                    if (!Array.isArray(importedData)) {
+                        throw new Error('数据格式不正确，必须是数组格式');
+                    }
+                    
+                    // 验证数据格式
+                    for (let item of importedData) {
+                        if (!item.title || !item.location) {
+                            throw new Error('数据格式不正确，每项必须包含title和location属性');
+                        }
+                    }
+                    
+                    bookData = importedData;
+                    saveData();
+                    
+                    // 清空表单
+                    importData.value = '';
+                    
+                    // 隐藏表单
+                    importDataForm.classList.remove('active');
+                    
+                    alert('数据导入成功！');
+                } catch (error) {
+                    alert('导入失败：' + error.message);
+                }
+            }
+            
             // 绑定事件
             searchButton.addEventListener('click', performSearch);
             searchInput.addEventListener('keypress', function(e) {
@@ -634,8 +852,70 @@
                 }
             });
             
+            // 管理员登录事件
+            adminToggle.addEventListener('click', function() {
+                adminLogin.classList.add('active');
+            });
+            
+            closeLogin.addEventListener('click', function() {
+                adminLogin.classList.remove('active');
+                adminPassword.value = '';
+            });
+            
+            loginBtn.addEventListener('click', function() {
+                if (adminPassword.value === ADMIN_PASSWORD) {
+                    sessionStorage.setItem('adminLoggedIn', 'true');
+                    adminLogin.classList.remove('active');
+                    adminSection.classList.add('active');
+                    adminPassword.value = '';
+                } else {
+                    alert('密码错误！');
+                }
+            });
+            
+            // 退出登录事件
+            logoutBtn.addEventListener('click', function() {
+                sessionStorage.removeItem('adminLoggedIn');
+                adminSection.classList.remove('active');
+                
+                // 隐藏所有表单
+                addBookForm.classList.remove('active');
+                importDataForm.classList.remove('active');
+            });
+            
+            // 数据管理事件
+            addBookBtn.addEventListener('click', function() {
+                addBookForm.classList.toggle('active');
+                importDataForm.classList.remove('active');
+            });
+            
+            exportDataBtn.addEventListener('click', exportData);
+            
+            importDataBtn.addEventListener('click', function() {
+                importDataForm.classList.toggle('active');
+                addBookForm.classList.remove('active');
+            });
+            
+            saveBookBtn.addEventListener('click', addNewBook);
+            
+            cancelBookBtn.addEventListener('click', function() {
+                addBookForm.classList.remove('active');
+                newBookTitle.value = '';
+                newBookLocation.value = '';
+            });
+            
+            confirmImportBtn.addEventListener('click', importNewData);
+            
+            cancelImportBtn.addEventListener('click', function() {
+                importDataForm.classList.remove('active');
+                importData.value = '';
+            });
+            
             // 初始显示提示
             resultContainer.innerHTML = '<div class="no-results">请输入关键词搜索绘本位置</div>';
+            
+            // 检查登录状态
+            checkLoginStatus();
         });
     </script>
 </body>
