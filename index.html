@@ -139,15 +139,25 @@
             align-items: center;
             justify-content: center;
             min-height: 80px;
+            cursor: pointer;
         }
         .feature-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 15px rgba(255, 107, 107, 0.2);
+            background: linear-gradient(135deg, #fff9f5, #ffe0d2);
+        }
+        .feature-card:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
         }
         .feature-icon {
             font-size: 24px;
             margin-bottom: 6px;
             color: #ff6b6b;
+            transition: transform 0.3s;
+        }
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2);
         }
         .feature-card h4 {
             color: #ff6b6b;
@@ -644,23 +654,24 @@
         
         <div id="search-info" class="search-info"></div>
         
-        <div id="result-container" class="result-container">
-            <div class="no-results">请输入关键词搜索绘本位置</div>
-        </div>
-        
+        <!-- 优化后的功能卡片 -->
         <div class="feature-section">
-            <div class="feature-card">
-                <div class="feature-icon">🔍</div>
+            <div class="feature-card" id="quick-search-card">
+                <div class="feature-icon">🚀</div>
                 <h4>快速搜索</h4>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">📍</div>
+            <div class="feature-card" id="precise-location-card">
+                <div class="feature-icon">🎯</div>
                 <h4>精确定位</h4>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">📱</div>
+            <div class="feature-card" id="easy-use-card">
+                <div class="feature-icon">✨</div>
                 <h4>简单易用</h4>
             </div>
+        </div>
+        
+        <div id="result-container" class="result-container">
+            <!-- 搜索结果将在这里显示 -->
         </div>
         
         <!-- 数据管理部分（默认隐藏） -->
@@ -876,6 +887,11 @@
             const searchButton = document.getElementById('search-button');
             const resultContainer = document.getElementById('result-container');
             const searchInfo = document.getElementById('search-info');
+            
+            // 功能卡片元素
+            const quickSearchCard = document.getElementById('quick-search-card');
+            const preciseLocationCard = document.getElementById('precise-location-card');
+            const easyUseCard = document.getElementById('easy-use-card');
             
             // 数据管理相关元素
             const adminToggle = document.getElementById('admin-toggle');
@@ -1102,6 +1118,22 @@
                 }
             }
             
+            // 功能卡片点击事件
+            quickSearchCard.addEventListener('click', function() {
+                searchInput.focus();
+                searchInfo.textContent = '已聚焦到搜索框，请输入书名关键词';
+            });
+            
+            preciseLocationCard.addEventListener('click', function() {
+                searchInput.focus();
+                searchInfo.textContent = '请输入完整或部分书名进行精确定位';
+            });
+            
+            easyUseCard.addEventListener('click', function() {
+                searchInput.focus();
+                searchInfo.textContent = '输入任意关键词开始搜索，简单易用';
+            });
+            
             // 绑定事件
             searchButton.addEventListener('click', performSearch);
             searchInput.addEventListener('keypress', function(e) {
@@ -1195,8 +1227,8 @@
                 importData.value = '';
             });
             
-            // 初始显示提示
-            resultContainer.innerHTML = '<div class="no-results">请输入关键词搜索绘本位置</div>';
+            // 初始状态不显示任何提示
+            resultContainer.innerHTML = '';
             
             // 检查登录状态
             checkLoginStatus();
