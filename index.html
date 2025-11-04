@@ -3,10 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>杨凌高新第二幼儿园绘本查询系统</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
     <style>
@@ -24,7 +20,7 @@
         }
         body {
             background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            padding: 15px;
+            padding: 10px;
             color: #333;
             min-height: 100vh;
             -webkit-text-size-adjust: 100%;
@@ -35,10 +31,10 @@
             background-color: white;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            padding: 15px;
             position: relative;
             overflow: hidden;
-            border: 8px solid #ff9e7d;
+            border: 6px solid #ff9e7d;
         }
         .container::before {
             content: "";
@@ -46,34 +42,34 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 8px;
+            height: 6px;
             background: linear-gradient(90deg, #ff9e7d, #ff6b6b, #ff9e7d);
         }
         header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             position: relative;
         }
         h1 {
             color: #ff6b6b;
-            margin-bottom: 10px;
-            font-size: 28px;
+            margin-bottom: 5px;
+            font-size: 22px;
             text-shadow: 2px 2px 0px #ffe0d2;
         }
         .title-line2 {
-            font-size: 24px;
+            font-size: 18px;
             color: #ff6b6b;
             margin-top: -5px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         .search-box {
             display: flex;
-            margin-bottom: 20px;
-            border-radius: 50px;
+            margin-bottom: 15px;
+            border-radius: 25px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(255, 107, 107, 0.2);
             transition: all 0.3s ease;
-            border: 3px solid #ff9e7d;
+            border: 2px solid #ff9e7d;
         }
         .search-box:focus-within {
             box-shadow: 0 5px 20px rgba(255, 107, 107, 0.3);
@@ -81,9 +77,9 @@
         }
         #search-input {
             flex: 1;
-            padding: 18px 20px;
+            padding: 15px;
             border: none;
-            font-size: 18px;
+            font-size: 16px;
             outline: none;
             background-color: #fff9f5;
             -webkit-appearance: none;
@@ -95,12 +91,12 @@
             background-color: white;
         }
         #search-button {
-            padding: 18px 25px;
+            padding: 15px 20px;
             background: linear-gradient(135deg, #ff6b6b, #ff9e7d);
             color: white;
             border: none;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             transition: all 0.3s;
             display: flex;
@@ -117,59 +113,59 @@
             background: linear-gradient(135deg, #ff5252, #ff8a65);
         }
         .search-info {
-            margin-top: 10px;
+            margin-top: 8px;
             color: #666;
-            font-size: 16px;
+            font-size: 14px;
             text-align: center;
-            min-height: 20px;
+            min-height: 18px;
             font-weight: bold;
         }
         .feature-section {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 12px;
-            margin: 20px 0;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
         }
         .feature-card {
             background: white;
-            border-radius: 15px;
-            padding: 15px 10px;
+            border-radius: 12px;
+            padding: 12px 5px;
             text-align: center;
             box-shadow: 0 3px 10px rgba(0,0,0,0.08);
             border: 2px dashed #ff9e7d;
             transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
         }
         .feature-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             box-shadow: 0 8px 15px rgba(255, 107, 107, 0.2);
         }
         .feature-icon {
-            font-size: 28px;
-            margin-bottom: 8px;
+            font-size: 24px;
+            margin-bottom: 6px;
             color: #ff6b6b;
         }
         .feature-card h4 {
             color: #ff6b6b;
-            margin-bottom: 5px;
-            font-size: 16px;
-        }
-        .feature-card p {
-            color: #666;
-            font-size: 12px;
-            line-height: 1.4;
+            font-size: 14px;
+            line-height: 1.2;
         }
         .result-container {
-            margin-top: 20px;
-            max-height: 400px;
+            margin-top: 15px;
+            max-height: 350px;
             overflow-y: auto;
-            border-radius: 15px;
-            border: 3px solid #ffd8cc;
+            border-radius: 12px;
+            border: 2px solid #ffd8cc;
             box-shadow: 0 3px 10px rgba(0,0,0,0.05);
             background: #fff9f5;
             -webkit-overflow-scrolling: touch;
         }
         .result-item {
-            padding: 15px;
+            padding: 12px;
             border-bottom: 2px dashed #ffd8cc;
             display: flex;
             justify-content: space-between;
@@ -191,24 +187,24 @@
             font-weight: bold;
             color: #333;
             flex: 1;
-            font-size: 18px;
+            font-size: 16px;
         }
         .book-location {
             color: #ff6b6b;
             font-weight: bold;
             background-color: #ffe0d2;
-            padding: 8px 15px;
-            border-radius: 20px;
-            margin-left: 15px;
+            padding: 6px 12px;
+            border-radius: 15px;
+            margin-left: 10px;
             white-space: nowrap;
-            font-size: 16px;
+            font-size: 14px;
             border: 2px solid #ff9e7d;
         }
         .no-results {
             text-align: center;
-            padding: 40px 20px;
+            padding: 30px 15px;
             color: #777;
-            font-size: 18px;
+            font-size: 16px;
         }
         .highlight {
             background-color: #fff9c4;
@@ -219,60 +215,60 @@
         }
         .instructions {
             background-color: #fff9f5;
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 25px;
-            font-size: 16px;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-size: 14px;
             color: #555;
-            border-left: 6px solid #ff6b6b;
-            border-right: 6px solid #ff6b6b;
+            border-left: 4px solid #ff6b6b;
+            border-right: 4px solid #ff6b6b;
         }
         .instructions h3 {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             color: #ff6b6b;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 20px;
+            gap: 6px;
+            font-size: 16px;
         }
         .instructions ul {
-            padding-left: 20px;
+            padding-left: 18px;
         }
         .instructions li {
-            margin-bottom: 10px;
-            line-height: 1.5;
+            margin-bottom: 8px;
+            line-height: 1.4;
         }
         footer {
             text-align: center;
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 3px dashed #ff9e7d;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px dashed #ff9e7d;
             color: #ff6b6b;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             position: relative;
         }
         .decoration {
             text-align: center;
-            margin: 15px 0;
+            margin: 12px 0;
         }
         .decoration span {
-            font-size: 24px;
-            margin: 0 5px;
+            font-size: 20px;
+            margin: 0 4px;
             color: #ff6b6b;
         }
         
         /* 隐藏的管理员按钮样式 */
         .admin-toggle {
             position: absolute;
-            bottom: 10px;
-            right: 15px;
+            bottom: 8px;
+            right: 12px;
             background: transparent;
             border: none;
             color: #ff9e7d;
             cursor: pointer;
-            font-size: 12px;
-            padding: 5px;
+            font-size: 11px;
+            padding: 4px;
             opacity: 0.5;
             transition: opacity 0.3s;
             -webkit-appearance: none;
@@ -300,9 +296,9 @@
         .login-container {
             background: white;
             border-radius: 15px;
-            padding: 25px;
+            padding: 20px;
             width: 90%;
-            max-width: 400px;
+            max-width: 350px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             border: 3px solid #ff9e7d;
         }
@@ -310,7 +306,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .login-header h3 {
             color: #ff6b6b;
@@ -319,7 +315,7 @@
         .close-btn {
             background: none;
             border: none;
-            font-size: 24px;
+            font-size: 22px;
             color: #ff6b6b;
             cursor: pointer;
             -webkit-appearance: none;
@@ -327,7 +323,7 @@
         .login-form {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
         .login-form input {
             padding: 12px;
@@ -357,11 +353,11 @@
         
         /* 数据管理样式 */
         .admin-section {
-            margin-top: 25px;
-            padding: 20px;
+            margin-top: 20px;
+            padding: 15px;
             background-color: #fff9f5;
-            border-radius: 15px;
-            border: 3px solid #ff9e7d;
+            border-radius: 12px;
+            border: 2px solid #ff9e7d;
             display: none;
         }
         .admin-section.active {
@@ -369,31 +365,31 @@
         }
         .admin-section h3 {
             color: #ff6b6b;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 20px;
+            gap: 6px;
+            font-size: 16px;
         }
         .admin-controls {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
+            gap: 8px;
+            margin-bottom: 12px;
         }
         .admin-btn {
-            padding: 10px 15px;
+            padding: 8px 12px;
             background: linear-gradient(135deg, #ff6b6b, #ff9e7d);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: bold;
             transition: all 0.3s;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
             -webkit-appearance: none;
         }
         .admin-btn:active {
@@ -404,30 +400,31 @@
         }
         .admin-form {
             background: white;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 12px;
+            border-radius: 8px;
             box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             display: none;
         }
         .admin-form.active {
             display: block;
         }
         .form-group {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         .form-group label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             color: #666;
             font-weight: bold;
+            font-size: 14px;
         }
         .form-group input, .form-group textarea, .form-group select {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             border: 2px solid #ffd8cc;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 6px;
+            font-size: 14px;
             -webkit-appearance: none;
         }
         .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
@@ -436,15 +433,16 @@
         }
         .form-buttons {
             display: flex;
-            gap: 10px;
-            margin-top: 15px;
+            gap: 8px;
+            margin-top: 12px;
         }
         .form-buttons button {
-            padding: 10px 15px;
+            padding: 8px 12px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
+            font-size: 14px;
             -webkit-appearance: none;
         }
         .form-buttons button:active {
@@ -465,28 +463,28 @@
         
         .delete-search-box {
             display: flex;
-            margin-bottom: 15px;
-            border-radius: 50px;
+            margin-bottom: 12px;
+            border-radius: 25px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(255, 107, 107, 0.2);
             border: 2px solid #ff9e7d;
         }
         .delete-search-input {
             flex: 1;
-            padding: 12px 15px;
+            padding: 10px 12px;
             border: none;
-            font-size: 16px;
+            font-size: 14px;
             outline: none;
             background-color: #fff9f5;
             -webkit-appearance: none;
         }
         .delete-search-button {
-            padding: 12px 20px;
+            padding: 10px 15px;
             background: linear-gradient(135deg, #ff6b6b, #ff9e7d);
             color: white;
             border: none;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             -webkit-appearance: none;
         }
@@ -495,12 +493,12 @@
         }
         
         .delete-results {
-            margin-top: 15px;
-            max-height: 200px;
+            margin-top: 12px;
+            max-height: 180px;
             overflow-y: auto;
             border: 2px solid #ffd8cc;
-            border-radius: 10px;
-            padding: 10px;
+            border-radius: 8px;
+            padding: 8px;
             background: white;
             -webkit-overflow-scrolling: touch;
         }
@@ -508,7 +506,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
+            padding: 8px;
             border-bottom: 1px dashed #ffd8cc;
         }
         .delete-result-item:last-child {
@@ -520,10 +518,11 @@
         .delete-result-title {
             font-weight: bold;
             color: #333;
+            font-size: 14px;
         }
         .delete-result-location {
             color: #ff6b6b;
-            font-size: 14px;
+            font-size: 12px;
         }
         
         /* 安卓特定样式 */
@@ -531,34 +530,33 @@
             transform: translateZ(0); /* 启用硬件加速 */
         }
         
-        @media (max-width: 600px) {
+        /* 响应式调整 */
+        @media (max-width: 480px) {
             body {
-                padding: 10px;
+                padding: 8px;
             }
             .container {
-                padding: 15px;
+                padding: 12px;
                 border-radius: 15px;
             }
             h1 {
-                font-size: 24px;
+                font-size: 20px;
             }
             .title-line2 {
-                font-size: 20px;
+                font-size: 16px;
             }
             .search-box {
                 flex-direction: column;
                 border-radius: 20px;
             }
             #search-input {
-                border-right: none;
-                border-bottom: none;
-                padding: 15px;
+                padding: 12px;
                 font-size: 16px;
             }
             #search-button {
                 border-radius: 0 0 15px 15px;
                 justify-content: center;
-                padding: 15px;
+                padding: 12px;
                 font-size: 16px;
             }
             .result-item {
@@ -567,21 +565,30 @@
             }
             .book-location {
                 margin-left: 0;
-                margin-top: 10px;
+                margin-top: 8px;
                 align-self: flex-end;
             }
             .feature-section {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
             }
             .feature-card {
-                padding: 12px 8px;
+                padding: 10px 4px;
+                min-height: 70px;
+            }
+            .feature-icon {
+                font-size: 20px;
+                margin-bottom: 4px;
+            }
+            .feature-card h4 {
+                font-size: 12px;
             }
             .instructions {
-                padding: 15px;
-                font-size: 15px;
+                padding: 12px;
+                font-size: 13px;
             }
             .book-title, .book-location {
-                font-size: 16px;
+                font-size: 14px;
             }
             .admin-controls {
                 flex-direction: column;
@@ -591,14 +598,29 @@
                 border-radius: 20px;
             }
             .delete-search-input {
-                border-right: none;
-                border-bottom: none;
-                padding: 15px;
+                padding: 12px;
             }
             .delete-search-button {
                 border-radius: 0 0 15px 15px;
                 justify-content: center;
-                padding: 15px;
+                padding: 12px;
+            }
+        }
+        
+        @media (max-width: 350px) {
+            .feature-section {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+            .feature-card {
+                min-height: 60px;
+                flex-direction: row;
+                justify-content: flex-start;
+                padding: 8px 12px;
+            }
+            .feature-icon {
+                margin-bottom: 0;
+                margin-right: 8px;
             }
         }
     </style>
@@ -630,17 +652,14 @@
             <div class="feature-card">
                 <div class="feature-icon">🔍</div>
                 <h4>快速搜索</h4>
-                <p>输入关键词即可查找</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">📍</div>
                 <h4>精确定位</h4>
-                <p>显示绘本具体位置</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">📱</div>
                 <h4>简单易用</h4>
-                <p>杨凌高新第二幼儿园专用</p>
             </div>
         </div>
         
@@ -765,11 +784,422 @@
             // 从localStorage加载数据，如果没有则使用默认数据
             let bookData = JSON.parse(localStorage.getItem('bookData')) || [
                 { title: "原来世界如此美好", location: "柜3-1-1" },
-                // ... 其余书籍数据保持不变
+                { title: "国王爸爸", location: "柜3-1-2" },
+                { title: "三个强盗", location: "柜3-1-3" },
+                { title: "三个强盗", location: "柜3-1-4" },
+                { title: "三个强盗", location: "柜3-1-5" },
+                { title: "爱音乐的马可", location: "柜3-1-6" },
+                { title: "爱音乐的马可", location: "柜3-1-7" },
+                { title: "棕色的熊、棕色的熊你在干什么？，了一只猫", location: "柜3-1-8" },
+                { title: "巨人的翰", location: "柜3-1-9" },
+                { title: "梦是什么？", location: "柜3-1-10" },
+                { title: "雪娃娃莉莉", location: "柜3-1-11" },
+                { title: "小种子", location: "柜3-1-12" },
+                { title: "吉莉娅数星星", location: "柜3-1-13" },
+                { title: "本吉和菲菲", location: "柜3-1-14" },
+                { title: "风中的树叶", location: "柜3-1-15" },
+                { title: "在家里", location: "柜3-1-16" },
+                { title: "会飞的箱子", location: "柜3-1-17" },
+                { title: "花木兰", location: "柜3-1-18" },
+                { title: "森林精灵的舞蹈", location: "柜3-1-19" },
+                { title: "你睡不着吗？", location: "柜3-1-20" },
+                { title: "帽子里的小兔", location: "柜3-1-21" },
+                { title: "帽子里的小兔", location: "柜3-1-22" },
+                { title: "露露的秘密花园", location: "柜3-1-23" },
+                { title: "奇奇做南瓜饼", location: "柜3-1-24" },
+                { title: "躲猫猫大王", location: "柜3-1-25" },
+                { title: "躲猫猫大王", location: "柜3-1-26" },
+                { title: "躲猫猫大王", location: "柜3-1-27" },
+                { title: "躲猫猫大王", location: "柜3-1-28" },
+                { title: "躲猫猫大王", location: "柜3-1-29" },
+                { title: "躲猫猫大王", location: "柜3-1-30" },
+                { title: "神奇变身术", location: "柜3-1-31" },
+                { title: "神奇变身术", location: "柜3-1-32" },
+                { title: "金雕猎狼", location: "柜3-1-33" },
+                { title: "行吟诗人但丁", location: "柜3-1-34" },
+                { title: "再过10分钟就睡觉", location: "柜3-1-35" },
+                { title: "我爸爸", location: "柜3-1-36" },
+                { title: "小绿狼", location: "柜3-1-37" },
+                { title: "小绿狼", location: "柜3-1-38" },
+                { title: "小魔怪要上学", location: "柜3-1-39" },
+                { title: "小魔怪要上学", location: "柜3-1-40" },
+                { title: "母鸡的旅行", location: "柜3-2-1" },
+                { title: "迟到大王", location: "柜3-2-2" },
+                { title: "嘿，帮我传个话！", location: "柜3-2-3" },
+                { title: "老人和猫", location: "柜3-2-4" },
+                { title: "你能听见我的声音吗？", location: "柜3-2-5" },
+                { title: "给爸爸的吻", location: "柜3-2-6" },
+                { title: "我喜欢说晚安", location: "柜3-2-7" },
+                { title: "下雨天玩泥巴", location: "柜3-2-8" },
+                { title: "莫夫里太太家的怪物", location: "柜3-2-9" },
+                { title: "小女巫", location: "柜3-2-10" },
+                { title: "毛娜的眼睛", location: "柜3-2-11" },
+                { title: "我的地图书", location: "柜3-2-12" },
+                { title: "门兽", location: "柜3-2-13" },
+                { title: "大嗓门的爸爸", location: "柜3-2-14" },
+                { title: "圣诞节的礼物", location: "柜3-2-15" },
+                { title: "圣诞节的礼物", location: "柜3-2-16" },
+                { title: "红蘑菇", location: "柜3-2-17" },
+                { title: "雨河", location: "柜3-2-18" },
+                { title: "世界第一傻瓜和他的飞船", location: "柜3-2-19" },
+                { title: "了不起", location: "柜3-2-20" },
+                { title: "澡堂子", location: "柜3-2-21" },
+                { title: "鲁拉鲁先生请客", location: "柜3-2-22" },
+                { title: "数字在哪里", location: "柜3-2-23" },
+                { title: "数字在哪里", location: "柜3-2-24" },
+                { title: "数字在哪里", location: "柜3-2-25" },
+                { title: "数字在哪里", location: "柜3-2-26" },
+                { title: "数字在哪里", location: "柜3-2-27" },
+                { title: "明锣移山", location: "柜3-2-28" },
+                { title: "你看到我的小鸭了吗？", location: "柜3-2-29" },
+                { title: "三顶帽子几个人", location: "柜3-2-30" },
+                { title: "獾的礼物", location: "柜3-2-31" },
+                { title: "驿马", location: "柜3-2-32" },
+                { title: "神奇的蓝色水桶", location: "柜3-2-33" },
+                { title: "太阳晚上到哪里去了？", location: "柜3-2-34" },
+                { title: "敌人", location: "柜3-2-35" },
+                { title: "爸爸和我", location: "柜3-2-36" },
+                { title: "我爱妈妈", location: "柜3-2-37" },
+                { title: "大房子里的好工作", location: "柜3-2-38" },
+                { title: "蚯蚓的日记", location: "柜3-2-39" },
+                { title: "弗洛拉的火烈鸟", location: "柜3-2-40" },
+                { title: "爷爷的幸福口令", location: "柜3-2-41" },
+                { title: "一只聪明的笨狼", location: "柜3-2-42" },
+                { title: "动物量身高", location: "柜3-2-43" },
+                { title: "我们做朋友吧", location: "柜3-2-44" },
+                { title: "方块动物园", location: "柜3-2-45" },
+                { title: "啊~蜘蛛", location: "柜3-2-46" }
             ];
 
-            // 其余JavaScript代码保持不变...
-            // [这里插入您原有的JavaScript代码，但确保使用上面添加的兼容性修复]
+            // 获取DOM元素
+            const searchInput = document.getElementById('search-input');
+            const searchButton = document.getElementById('search-button');
+            const resultContainer = document.getElementById('result-container');
+            const searchInfo = document.getElementById('search-info');
+            
+            // 数据管理相关元素
+            const adminToggle = document.getElementById('admin-toggle');
+            const adminLogin = document.getElementById('admin-login');
+            const adminSection = document.getElementById('admin-section');
+            const closeLogin = document.getElementById('close-login');
+            const adminPassword = document.getElementById('admin-password');
+            const loginBtn = document.getElementById('login-btn');
+            const logoutBtn = document.getElementById('logout-btn');
+            
+            const addBookBtn = document.getElementById('add-book-btn');
+            const deleteBookBtn = document.getElementById('delete-book-btn');
+            const exportDataBtn = document.getElementById('export-data-btn');
+            const importDataBtn = document.getElementById('import-data-btn');
+            const addBookForm = document.getElementById('add-book-form');
+            const deleteBookForm = document.getElementById('delete-book-form');
+            const importDataForm = document.getElementById('import-data-form');
+            const saveBookBtn = document.getElementById('save-book-btn');
+            const cancelBookBtn = document.getElementById('cancel-book-btn');
+            const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+            const confirmImportBtn = document.getElementById('confirm-import-btn');
+            const cancelImportBtn = document.getElementById('cancel-import-btn');
+            const newBookTitle = document.getElementById('new-book-title');
+            const newBookLocation = document.getElementById('new-book-location');
+            const importData = document.getElementById('import-data');
+            
+            // 删除书籍相关元素
+            const deleteSearchInput = document.getElementById('delete-search-input');
+            const deleteSearchButton = document.getElementById('delete-search-button');
+            const deleteSearchResults = document.getElementById('delete-search-results');
+            
+            // 管理员密码 - 您可以修改这个密码
+            const ADMIN_PASSWORD = "admin123";
+            
+            // 检查是否已经登录
+            function checkLoginStatus() {
+                const isLoggedIn = sessionStorage.getItem('adminLoggedIn') === 'true';
+                if (isLoggedIn) {
+                    adminSection.classList.add('active');
+                }
+            }
+            
+            // 搜索功能
+            function performSearch() {
+                const searchTerm = searchInput.value.trim().toLowerCase();
+                
+                // 清空之前的结果
+                resultContainer.innerHTML = '';
+                searchInfo.textContent = '';
+                
+                if (searchTerm === '') {
+                    resultContainer.innerHTML = '<div class="no-results">请输入搜索关键词</div>';
+                    return;
+                }
+                
+                // 过滤匹配的结果
+                const results = bookData.filter(book => 
+                    book.title.toLowerCase().includes(searchTerm)
+                );
+                
+                // 显示结果
+                if (results.length === 0) {
+                    resultContainer.innerHTML = '<div class="no-results">未找到匹配的绘本</div>';
+                    searchInfo.textContent = `搜索"${searchTerm}"，未找到结果`;
+                } else {
+                    searchInfo.textContent = `搜索"${searchTerm}"，找到${results.length}个结果`;
+                    
+                    results.forEach(book => {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'result-item';
+                        
+                        // 高亮显示关键词
+                        const highlightedTitle = book.title.replace(
+                            new RegExp(searchTerm, 'gi'), 
+                            match => `<span class="highlight">${match}</span>`
+                        );
+                        
+                        resultItem.innerHTML = `
+                            <div class="book-title">${highlightedTitle}</div>
+                            <div class="book-location">${book.location}</div>
+                        `;
+                        
+                        resultContainer.appendChild(resultItem);
+                    });
+                }
+            }
+            
+            // 保存数据到localStorage
+            function saveData() {
+                localStorage.setItem('bookData', JSON.stringify(bookData));
+            }
+            
+            // 添加新书
+            function addNewBook() {
+                const title = newBookTitle.value.trim();
+                const location = newBookLocation.value.trim();
+                
+                if (!title || !location) {
+                    alert('请填写完整的书名和位置信息！');
+                    return;
+                }
+                
+                bookData.push({ title, location });
+                saveData();
+                
+                // 清空表单
+                newBookTitle.value = '';
+                newBookLocation.value = '';
+                
+                // 隐藏表单
+                addBookForm.classList.remove('active');
+                
+                alert('新书添加成功！');
+            }
+            
+            // 导出数据
+            function exportData() {
+                const dataStr = JSON.stringify(bookData, null, 2);
+                const dataBlob = new Blob([dataStr], {type: "application/json"});
+                
+                const url = URL.createObjectURL(dataBlob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'book-data.json';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+            
+            // 导入数据
+            function importNewData() {
+                try {
+                    const importedData = JSON.parse(importData.value);
+                    
+                    if (!Array.isArray(importedData)) {
+                        throw new Error('数据格式不正确，必须是数组格式');
+                    }
+                    
+                    // 验证数据格式
+                    for (let item of importedData) {
+                        if (!item.title || !item.location) {
+                            throw new Error('数据格式不正确，每项必须包含title和location属性');
+                        }
+                    }
+                    
+                    bookData = importedData;
+                    saveData();
+                    
+                    // 清空表单
+                    importData.value = '';
+                    
+                    // 隐藏表单
+                    importDataForm.classList.remove('active');
+                    
+                    alert('数据导入成功！');
+                } catch (error) {
+                    alert('导入失败：' + error.message);
+                }
+            }
+            
+            // 搜索要删除的书籍
+            function searchBooksToDelete() {
+                const searchTerm = deleteSearchInput.value.trim().toLowerCase();
+                
+                // 清空之前的结果
+                deleteSearchResults.innerHTML = '';
+                
+                if (searchTerm === '') {
+                    deleteSearchResults.innerHTML = '<div class="no-results">请输入搜索关键词</div>';
+                    return;
+                }
+                
+                // 过滤匹配的结果
+                const results = bookData.filter(book => 
+                    book.title.toLowerCase().includes(searchTerm)
+                );
+                
+                // 显示结果
+                if (results.length === 0) {
+                    deleteSearchResults.innerHTML = '<div class="no-results">未找到匹配的绘本</div>';
+                } else {
+                    results.forEach((book, index) => {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'delete-result-item';
+                        
+                        // 高亮显示关键词
+                        const highlightedTitle = book.title.replace(
+                            new RegExp(searchTerm, 'gi'), 
+                            match => `<span class="highlight">${match}</span>`
+                        );
+                        
+                        resultItem.innerHTML = `
+                            <div class="delete-result-info">
+                                <div class="delete-result-title">${highlightedTitle}</div>
+                                <div class="delete-result-location">${book.location}</div>
+                            </div>
+                            <button class="delete-btn delete-specific-book" data-index="${bookData.findIndex(b => b.title === book.title && b.location === book.location)}">删除</button>
+                        `;
+                        
+                        deleteSearchResults.appendChild(resultItem);
+                    });
+                    
+                    // 为删除按钮添加事件监听
+                    document.querySelectorAll('.delete-specific-book').forEach(button => {
+                        button.addEventListener('click', function() {
+                            const index = parseInt(this.getAttribute('data-index'));
+                            deleteSpecificBook(index);
+                        });
+                    });
+                }
+            }
+            
+            // 删除特定书籍
+            function deleteSpecificBook(index) {
+                if (index >= 0 && index < bookData.length) {
+                    const book = bookData[index];
+                    if (confirm(`确定要删除《${book.title}》吗？`)) {
+                        bookData.splice(index, 1);
+                        saveData();
+                        alert('书籍删除成功！');
+                        // 重新搜索以更新结果
+                        searchBooksToDelete();
+                    }
+                }
+            }
+            
+            // 绑定事件
+            searchButton.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            // 删除书籍搜索事件
+            deleteSearchButton.addEventListener('click', searchBooksToDelete);
+            deleteSearchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchBooksToDelete();
+                }
+            });
+            
+            // 管理员登录事件
+            adminToggle.addEventListener('click', function() {
+                adminLogin.classList.add('active');
+            });
+            
+            closeLogin.addEventListener('click', function() {
+                adminLogin.classList.remove('active');
+                adminPassword.value = '';
+            });
+            
+            loginBtn.addEventListener('click', function() {
+                if (adminPassword.value === ADMIN_PASSWORD) {
+                    sessionStorage.setItem('adminLoggedIn', 'true');
+                    adminLogin.classList.remove('active');
+                    adminSection.classList.add('active');
+                    adminPassword.value = '';
+                } else {
+                    alert('密码错误！');
+                }
+            });
+            
+            // 退出登录事件
+            logoutBtn.addEventListener('click', function() {
+                sessionStorage.removeItem('adminLoggedIn');
+                adminSection.classList.remove('active');
+                
+                // 隐藏所有表单
+                addBookForm.classList.remove('active');
+                deleteBookForm.classList.remove('active');
+                importDataForm.classList.remove('active');
+            });
+            
+            // 数据管理事件
+            addBookBtn.addEventListener('click', function() {
+                addBookForm.classList.toggle('active');
+                deleteBookForm.classList.remove('active');
+                importDataForm.classList.remove('active');
+            });
+            
+            deleteBookBtn.addEventListener('click', function() {
+                deleteBookForm.classList.toggle('active');
+                addBookForm.classList.remove('active');
+                importDataForm.classList.remove('active');
+                // 清空删除搜索
+                deleteSearchInput.value = '';
+                deleteSearchResults.innerHTML = '<div class="no-results">请输入关键词搜索要删除的书籍</div>';
+            });
+            
+            exportDataBtn.addEventListener('click', exportData);
+            
+            importDataBtn.addEventListener('click', function() {
+                importDataForm.classList.toggle('active');
+                addBookForm.classList.remove('active');
+                deleteBookForm.classList.remove('active');
+            });
+            
+            saveBookBtn.addEventListener('click', addNewBook);
+            
+            cancelBookBtn.addEventListener('click', function() {
+                addBookForm.classList.remove('active');
+                newBookTitle.value = '';
+                newBookLocation.value = '';
+            });
+            
+            cancelDeleteBtn.addEventListener('click', function() {
+                deleteBookForm.classList.remove('active');
+                deleteSearchInput.value = '';
+                deleteSearchResults.innerHTML = '';
+            });
+            
+            confirmImportBtn.addEventListener('click', importNewData);
+            
+            cancelImportBtn.addEventListener('click', function() {
+                importDataForm.classList.remove('active');
+                importData.value = '';
+            });
+            
+            // 初始显示提示
+            resultContainer.innerHTML = '<div class="no-results">请输入关键词搜索绘本位置</div>';
+            
+            // 检查登录状态
+            checkLoginStatus();
         });
     </script>
 </body>
