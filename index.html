@@ -268,6 +268,18 @@
             color: #ff6b6b;
         }
         
+        /* 技术支持信息样式 */
+        .tech-support {
+            text-align: center;
+            margin-top: 10px;
+            padding: 8px;
+            background-color: #fff9f5;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #888;
+            border: 1px dashed #ff9e7d;
+        }
+        
         /* 隐藏的管理员按钮样式 */
         .admin-toggle {
             position: absolute;
@@ -471,6 +483,126 @@
             color: white;
         }
         
+        /* 批量操作相关样式 */
+        .batch-section {
+            margin-top: 15px;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border: 2px solid #ffd8cc;
+        }
+        .batch-section h4 {
+            color: #ff6b6b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 15px;
+        }
+        .batch-format {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+            padding: 8px;
+            background-color: #fff9f5;
+            border-radius: 6px;
+            border-left: 3px solid #ff6b6b;
+        }
+        .file-input-wrapper {
+            position: relative;
+            margin-bottom: 8px;
+        }
+        .file-input-wrapper input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            border: 2px dashed #ff9e7d;
+            border-radius: 6px;
+            background-color: #fff9f5;
+        }
+        .batch-preview {
+            margin-top: 12px;
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ffd8cc;
+            border-radius: 6px;
+            padding: 8px;
+            background-color: #fff9f5;
+            font-size: 12px;
+        }
+        .batch-preview-item {
+            padding: 4px 6px;
+            border-bottom: 1px dashed #ffd8cc;
+            display: flex;
+            justify-content: space-between;
+        }
+        .batch-preview-item:last-child {
+            border-bottom: none;
+        }
+        .batch-stats {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+        
+        /* 查看所有书籍样式 */
+        .view-all-books {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 2px solid #ffd8cc;
+            border-radius: 8px;
+            padding: 8px;
+            background: white;
+            -webkit-overflow-scrolling: touch;
+        }
+        .book-list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            background-color: #fff9f5;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #ff6b6b;
+            border: 1px solid #ffd8cc;
+        }
+        .book-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            border-bottom: 1px dashed #ffd8cc;
+            transition: background-color 0.2s;
+        }
+        .book-list-item:hover {
+            background-color: #fff9f5;
+        }
+        .book-list-item:last-child {
+            border-bottom: none;
+        }
+        .book-list-title {
+            flex: 1;
+            font-weight: bold;
+            color: #333;
+        }
+        .book-list-location {
+            color: #ff6b6b;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .book-list-actions {
+            display: flex;
+            gap: 4px;
+        }
+        .book-list-count {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #666;
+        }
+        
         .delete-search-box {
             display: flex;
             margin-bottom: 12px;
@@ -615,6 +747,21 @@
                 justify-content: center;
                 padding: 12px;
             }
+            .batch-section {
+                padding: 10px;
+            }
+            .book-list-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .book-list-location {
+                margin-right: 0;
+                margin-top: 4px;
+            }
+            .book-list-actions {
+                margin-top: 4px;
+                align-self: flex-end;
+            }
         }
         
         @media (max-width: 350px) {
@@ -649,7 +796,7 @@
         <!-- 搜索栏在功能卡片上方 -->
         <div class="search-box">
             <input type="text" id="search-input" placeholder="输入书名关键词，如：三个强盗、恐龙...">
-            <button id="search-button"><span>🔍</span> 搜索</button>
+            <button id="search-button"><span>🔍</span> 帮我找书</button>
         </div>
         
         <div id="search-info" class="search-info"></div>
@@ -681,8 +828,11 @@
             <div class="admin-controls">
                 <button id="add-book-btn" class="admin-btn"><span>➕</span> 添加新书</button>
                 <button id="delete-book-btn" class="admin-btn"><span>🗑️</span> 删除书籍</button>
+                <button id="view-all-books-btn" class="admin-btn"><span>📖</span> 查看所有</button>
+                <button id="batch-upload-btn" class="admin-btn"><span>📤</span> 批量上传</button>
+                <button id="batch-delete-btn" class="admin-btn"><span>🧹</span> 批量删除</button>
                 <button id="export-data-btn" class="admin-btn"><span>📥</span> 导出数据</button>
-                <button id="import-data-btn" class="admin-btn"><span>📤</span> 导入数据</button>
+                <button id="import-data-btn" class="admin-btn"><span>📋</span> 导入数据</button>
                 <button id="logout-btn" class="admin-btn"><span>🚪</span> 退出管理</button>
             </div>
             
@@ -714,6 +864,88 @@
                 </div>
             </div>
             
+            <!-- 查看所有书籍表单 -->
+            <div id="view-all-books-form" class="admin-form">
+                <div class="batch-section">
+                    <h4><span>📖</span> 所有绘本列表</h4>
+                    <div class="view-all-books">
+                        <div class="book-list-header">
+                            <span>书名</span>
+                            <span>位置</span>
+                        </div>
+                        <div id="all-books-list">
+                            <!-- 所有书籍将在这里显示 -->
+                        </div>
+                        <div id="all-books-count" class="book-list-count">
+                            <!-- 书籍数量统计将在这里显示 -->
+                        </div>
+                    </div>
+                    <div class="form-buttons">
+                        <button id="close-view-all-btn" class="cancel-btn">关闭</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 批量上传表单 -->
+            <div id="batch-upload-form" class="admin-form">
+                <div class="batch-section">
+                    <h4><span>📤</span> 批量上传绘本数据</h4>
+                    <div class="batch-format">
+                        <strong>支持格式：</strong>CSV文件（书名,位置）或JSON文件<br>
+                        <strong>CSV示例：</strong><br>
+                        <code>三个强盗,柜3-1-3<br>爱音乐的马可,柜3-1-6</code>
+                    </div>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="batch-upload-file" accept=".csv,.json,.txt">
+                    </div>
+                    <div class="form-group">
+                        <label for="batch-upload-text">或直接粘贴数据（每行格式：书名,位置）</label>
+                        <textarea id="batch-upload-text" rows="6" placeholder="三个强盗,柜3-1-3&#10;爱音乐的马可,柜3-1-6&#10;..."></textarea>
+                    </div>
+                    <div id="batch-preview" class="batch-preview" style="display: none;">
+                        <!-- 预览内容将在这里显示 -->
+                    </div>
+                    <div id="batch-stats" class="batch-stats"></div>
+                    <div class="form-buttons">
+                        <button id="confirm-batch-upload-btn" class="save-btn">确认上传</button>
+                        <button id="cancel-batch-upload-btn" class="cancel-btn">取消</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 批量删除表单 -->
+            <div id="batch-delete-form" class="admin-form">
+                <div class="batch-section">
+                    <h4><span>🧹</span> 批量删除绘本数据</h4>
+                    <div class="form-group">
+                        <label for="batch-delete-filter">筛选条件</label>
+                        <select id="batch-delete-filter">
+                            <option value="all">删除所有数据</option>
+                            <option value="location">按位置前缀删除</option>
+                            <option value="keyword">按书名关键词删除</option>
+                        </select>
+                    </div>
+                    <div id="batch-delete-options">
+                        <div class="form-group" id="location-filter" style="display: none;">
+                            <label for="batch-delete-location">位置前缀</label>
+                            <input type="text" id="batch-delete-location" placeholder="例如：柜3-1">
+                        </div>
+                        <div class="form-group" id="keyword-filter" style="display: none;">
+                            <label for="batch-delete-keyword">书名关键词</label>
+                            <input type="text" id="batch-delete-keyword" placeholder="例如：强盗">
+                        </div>
+                    </div>
+                    <div id="batch-delete-preview" class="batch-preview" style="display: none;">
+                        <!-- 预览内容将在这里显示 -->
+                    </div>
+                    <div id="batch-delete-stats" class="batch-stats"></div>
+                    <div class="form-buttons">
+                        <button id="confirm-batch-delete-btn" class="delete-btn">确认删除</button>
+                        <button id="cancel-batch-delete-btn" class="cancel-btn">取消</button>
+                    </div>
+                </div>
+            </div>
+            
             <div id="import-data-form" class="admin-form">
                 <div class="form-group">
                     <label for="import-data">导入数据 (JSON格式)</label>
@@ -737,7 +969,10 @@
         </div>
         
         <footer>
-            <p>杨凌高新第二幼儿园绘本查询系统 &copy; 2025 | 让找书变得更简单</p>
+            <p>杨凌高新第二幼儿园绘本查询系统 &copy; 2025</p>
+            <div class="tech-support">
+                技术支持：杨凌高新幼儿园信息化中心
+            </div>
             <!-- 隐藏的管理员按钮 -->
             <button id="admin-toggle" class="admin-toggle">管理</button>
         </footer>
@@ -904,19 +1139,50 @@
             
             const addBookBtn = document.getElementById('add-book-btn');
             const deleteBookBtn = document.getElementById('delete-book-btn');
+            const viewAllBooksBtn = document.getElementById('view-all-books-btn');
+            const batchUploadBtn = document.getElementById('batch-upload-btn');
+            const batchDeleteBtn = document.getElementById('batch-delete-btn');
             const exportDataBtn = document.getElementById('export-data-btn');
             const importDataBtn = document.getElementById('import-data-btn');
             const addBookForm = document.getElementById('add-book-form');
             const deleteBookForm = document.getElementById('delete-book-form');
+            const viewAllBooksForm = document.getElementById('view-all-books-form');
+            const batchUploadForm = document.getElementById('batch-upload-form');
+            const batchDeleteForm = document.getElementById('batch-delete-form');
             const importDataForm = document.getElementById('import-data-form');
             const saveBookBtn = document.getElementById('save-book-btn');
             const cancelBookBtn = document.getElementById('cancel-book-btn');
             const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+            const closeViewAllBtn = document.getElementById('close-view-all-btn');
             const confirmImportBtn = document.getElementById('confirm-import-btn');
             const cancelImportBtn = document.getElementById('cancel-import-btn');
             const newBookTitle = document.getElementById('new-book-title');
             const newBookLocation = document.getElementById('new-book-location');
             const importData = document.getElementById('import-data');
+            
+            // 查看所有书籍相关元素
+            const allBooksList = document.getElementById('all-books-list');
+            const allBooksCount = document.getElementById('all-books-count');
+            
+            // 批量上传相关元素
+            const batchUploadFile = document.getElementById('batch-upload-file');
+            const batchUploadText = document.getElementById('batch-upload-text');
+            const batchPreview = document.getElementById('batch-preview');
+            const batchStats = document.getElementById('batch-stats');
+            const confirmBatchUploadBtn = document.getElementById('confirm-batch-upload-btn');
+            const cancelBatchUploadBtn = document.getElementById('cancel-batch-upload-btn');
+            
+            // 批量删除相关元素
+            const batchDeleteFilter = document.getElementById('batch-delete-filter');
+            const batchDeleteOptions = document.getElementById('batch-delete-options');
+            const locationFilter = document.getElementById('location-filter');
+            const keywordFilter = document.getElementById('keyword-filter');
+            const batchDeleteLocation = document.getElementById('batch-delete-location');
+            const batchDeleteKeyword = document.getElementById('batch-delete-keyword');
+            const batchDeletePreview = document.getElementById('batch-delete-preview');
+            const batchDeleteStats = document.getElementById('batch-delete-stats');
+            const confirmBatchDeleteBtn = document.getElementById('confirm-batch-delete-btn');
+            const cancelBatchDeleteBtn = document.getElementById('cancel-batch-delete-btn');
             
             // 删除书籍相关元素
             const deleteSearchInput = document.getElementById('delete-search-input');
@@ -1118,6 +1384,267 @@
                 }
             }
             
+            // 查看所有书籍功能
+            function displayAllBooks() {
+                allBooksList.innerHTML = '';
+                allBooksCount.textContent = `共 ${bookData.length} 本绘本`;
+                
+                if (bookData.length === 0) {
+                    allBooksList.innerHTML = '<div class="no-results">暂无绘本数据</div>';
+                    return;
+                }
+                
+                // 按位置排序书籍
+                const sortedBooks = [...bookData].sort((a, b) => {
+                    return a.location.localeCompare(b.location);
+                });
+                
+                sortedBooks.forEach((book, index) => {
+                    const bookItem = document.createElement('div');
+                    bookItem.className = 'book-list-item';
+                    
+                    bookItem.innerHTML = `
+                        <div class="book-list-title">${book.title}</div>
+                        <div class="book-list-location">${book.location}</div>
+                        <div class="book-list-actions">
+                            <button class="delete-btn delete-book-from-list" data-index="${bookData.findIndex(b => b.title === book.title && b.location === book.location)}">删除</button>
+                        </div>
+                    `;
+                    
+                    allBooksList.appendChild(bookItem);
+                });
+                
+                // 为删除按钮添加事件监听
+                document.querySelectorAll('.delete-book-from-list').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        deleteSpecificBook(index);
+                        // 更新列表
+                        setTimeout(() => {
+                            displayAllBooks();
+                        }, 100);
+                    });
+                });
+            }
+            
+            // 批量上传功能
+            function parseBatchData(text) {
+                const lines = text.split('\n').filter(line => line.trim() !== '');
+                const books = [];
+                
+                for (let line of lines) {
+                    // 尝试解析CSV格式（书名,位置）
+                    if (line.includes(',')) {
+                        const parts = line.split(',');
+                        if (parts.length >= 2) {
+                            const title = parts[0].trim();
+                            const location = parts[1].trim();
+                            if (title && location) {
+                                books.push({ title, location });
+                            }
+                        }
+                    }
+                    // 尝试解析JSON格式
+                    else if (line.trim().startsWith('{') && line.trim().endsWith('}')) {
+                        try {
+                            const book = JSON.parse(line);
+                            if (book.title && book.location) {
+                                books.push(book);
+                            }
+                        } catch (e) {
+                            // 忽略JSON解析错误
+                        }
+                    }
+                }
+                
+                return books;
+            }
+            
+            function previewBatchData(books) {
+                batchPreview.innerHTML = '';
+                batchStats.textContent = '';
+                
+                if (books.length === 0) {
+                    batchPreview.style.display = 'none';
+                    batchStats.textContent = '未找到有效数据';
+                    return;
+                }
+                
+                batchPreview.style.display = 'block';
+                
+                // 显示前10条预览
+                const previewCount = Math.min(books.length, 10);
+                for (let i = 0; i < previewCount; i++) {
+                    const book = books[i];
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'batch-preview-item';
+                    previewItem.innerHTML = `
+                        <span>${book.title}</span>
+                        <span>${book.location}</span>
+                    `;
+                    batchPreview.appendChild(previewItem);
+                }
+                
+                if (books.length > 10) {
+                    const moreItem = document.createElement('div');
+                    moreItem.className = 'batch-preview-item';
+                    moreItem.innerHTML = `<span>... 还有 ${books.length - 10} 条记录</span>`;
+                    batchPreview.appendChild(moreItem);
+                }
+                
+                batchStats.textContent = `共找到 ${books.length} 条有效记录`;
+            }
+            
+            function handleBatchUpload() {
+                let booksToAdd = [];
+                
+                // 优先使用文件
+                if (batchUploadFile.files.length > 0) {
+                    const file = batchUploadFile.files[0];
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        const text = e.target.result;
+                        booksToAdd = parseBatchData(text);
+                        previewBatchData(booksToAdd);
+                    };
+                    
+                    reader.readAsText(file);
+                } 
+                // 使用文本区域
+                else if (batchUploadText.value.trim()) {
+                    booksToAdd = parseBatchData(batchUploadText.value);
+                    previewBatchData(booksToAdd);
+                } else {
+                    alert('请选择文件或输入数据！');
+                    return;
+                }
+                
+                // 确认上传
+                confirmBatchUploadBtn.onclick = function() {
+                    if (booksToAdd.length === 0) {
+                        alert('没有有效数据可上传！');
+                        return;
+                    }
+                    
+                    if (confirm(`确定要添加 ${booksToAdd.length} 条记录吗？`)) {
+                        // 检查重复数据并覆盖
+                        let addedCount = 0;
+                        let updatedCount = 0;
+                        
+                        booksToAdd.forEach(newBook => {
+                            // 查找是否已存在相同书名和位置的记录
+                            const existingIndex = bookData.findIndex(
+                                book => book.title === newBook.title && book.location === newBook.location
+                            );
+                            
+                            if (existingIndex !== -1) {
+                                // 如果存在，替换现有记录
+                                bookData[existingIndex] = newBook;
+                                updatedCount++;
+                            } else {
+                                // 如果不存在，添加新记录
+                                bookData.push(newBook);
+                                addedCount++;
+                            }
+                        });
+                        
+                        saveData();
+                        
+                        let message = `数据上传完成！`;
+                        if (addedCount > 0) {
+                            message += ` 新增了 ${addedCount} 条记录。`;
+                        }
+                        if (updatedCount > 0) {
+                            message += ` 更新了 ${updatedCount} 条重复记录。`;
+                        }
+                        
+                        alert(message);
+                        
+                        // 重置表单
+                        batchUploadFile.value = '';
+                        batchUploadText.value = '';
+                        batchPreview.style.display = 'none';
+                        batchStats.textContent = '';
+                        batchUploadForm.classList.remove('active');
+                    }
+                };
+            }
+            
+            // 批量删除功能
+            function updateBatchDeletePreview() {
+                const filterType = batchDeleteFilter.value;
+                let booksToDelete = [];
+                
+                if (filterType === 'all') {
+                    booksToDelete = [...bookData];
+                } else if (filterType === 'location' && batchDeleteLocation.value.trim()) {
+                    const prefix = batchDeleteLocation.value.trim();
+                    booksToDelete = bookData.filter(book => book.location.startsWith(prefix));
+                } else if (filterType === 'keyword' && batchDeleteKeyword.value.trim()) {
+                    const keyword = batchDeleteKeyword.value.trim().toLowerCase();
+                    booksToDelete = bookData.filter(book => book.title.toLowerCase().includes(keyword));
+                }
+                
+                batchDeletePreview.innerHTML = '';
+                batchDeleteStats.textContent = '';
+                
+                if (booksToDelete.length === 0) {
+                    batchDeletePreview.style.display = 'none';
+                    batchDeleteStats.textContent = '没有匹配的记录';
+                    return;
+                }
+                
+                batchDeletePreview.style.display = 'block';
+                
+                // 显示前10条预览
+                const previewCount = Math.min(booksToDelete.length, 10);
+                for (let i = 0; i < previewCount; i++) {
+                    const book = booksToDelete[i];
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'batch-preview-item';
+                    previewItem.innerHTML = `
+                        <span>${book.title}</span>
+                        <span>${book.location}</span>
+                    `;
+                    batchDeletePreview.appendChild(previewItem);
+                }
+                
+                if (booksToDelete.length > 10) {
+                    const moreItem = document.createElement('div');
+                    moreItem.className = 'batch-preview-item';
+                    moreItem.innerHTML = `<span>... 还有 ${booksToDelete.length - 10} 条记录</span>`;
+                    batchDeletePreview.appendChild(moreItem);
+                }
+                
+                batchDeleteStats.textContent = `将删除 ${booksToDelete.length} 条记录`;
+                
+                // 更新确认按钮
+                confirmBatchDeleteBtn.onclick = function() {
+                    if (booksToDelete.length === 0) {
+                        alert('没有可删除的记录！');
+                        return;
+                    }
+                    
+                    if (confirm(`确定要删除 ${booksToDelete.length} 条记录吗？此操作不可撤销！`)) {
+                        if (filterType === 'all') {
+                            bookData = [];
+                        } else {
+                            bookData = bookData.filter(book => !booksToDelete.includes(book));
+                        }
+                        saveData();
+                        alert(`成功删除 ${booksToDelete.length} 条记录！`);
+                        
+                        // 重置表单
+                        batchDeleteLocation.value = '';
+                        batchDeleteKeyword.value = '';
+                        batchDeletePreview.style.display = 'none';
+                        batchDeleteStats.textContent = '';
+                        batchDeleteForm.classList.remove('active');
+                    }
+                };
+            }
+            
             // 功能卡片点击事件
             quickSearchCard.addEventListener('click', function() {
                 searchInput.focus();
@@ -1150,6 +1677,35 @@
                 }
             });
             
+            // 批量上传事件
+            batchUploadFile.addEventListener('change', handleBatchUpload);
+            batchUploadText.addEventListener('input', function() {
+                if (batchUploadText.value.trim()) {
+                    const booksToAdd = parseBatchData(batchUploadText.value);
+                    previewBatchData(booksToAdd);
+                } else {
+                    batchPreview.style.display = 'none';
+                    batchStats.textContent = '';
+                }
+            });
+            
+            // 批量删除事件
+            batchDeleteFilter.addEventListener('change', function() {
+                locationFilter.style.display = 'none';
+                keywordFilter.style.display = 'none';
+                
+                if (this.value === 'location') {
+                    locationFilter.style.display = 'block';
+                } else if (this.value === 'keyword') {
+                    keywordFilter.style.display = 'block';
+                }
+                
+                updateBatchDeletePreview();
+            });
+            
+            batchDeleteLocation.addEventListener('input', updateBatchDeletePreview);
+            batchDeleteKeyword.addEventListener('input', updateBatchDeletePreview);
+            
             // 管理员登录事件
             adminToggle.addEventListener('click', function() {
                 adminLogin.classList.add('active');
@@ -1179,6 +1735,9 @@
                 // 隐藏所有表单
                 addBookForm.classList.remove('active');
                 deleteBookForm.classList.remove('active');
+                viewAllBooksForm.classList.remove('active');
+                batchUploadForm.classList.remove('active');
+                batchDeleteForm.classList.remove('active');
                 importDataForm.classList.remove('active');
             });
             
@@ -1186,16 +1745,52 @@
             addBookBtn.addEventListener('click', function() {
                 addBookForm.classList.toggle('active');
                 deleteBookForm.classList.remove('active');
+                viewAllBooksForm.classList.remove('active');
+                batchUploadForm.classList.remove('active');
+                batchDeleteForm.classList.remove('active');
                 importDataForm.classList.remove('active');
             });
             
             deleteBookBtn.addEventListener('click', function() {
                 deleteBookForm.classList.toggle('active');
                 addBookForm.classList.remove('active');
+                viewAllBooksForm.classList.remove('active');
+                batchUploadForm.classList.remove('active');
+                batchDeleteForm.classList.remove('active');
                 importDataForm.classList.remove('active');
                 // 清空删除搜索
                 deleteSearchInput.value = '';
                 deleteSearchResults.innerHTML = '<div class="no-results">请输入关键词搜索要删除的书籍</div>';
+            });
+            
+            viewAllBooksBtn.addEventListener('click', function() {
+                viewAllBooksForm.classList.toggle('active');
+                addBookForm.classList.remove('active');
+                deleteBookForm.classList.remove('active');
+                batchUploadForm.classList.remove('active');
+                batchDeleteForm.classList.remove('active');
+                importDataForm.classList.remove('active');
+                // 显示所有书籍
+                displayAllBooks();
+            });
+            
+            batchUploadBtn.addEventListener('click', function() {
+                batchUploadForm.classList.toggle('active');
+                addBookForm.classList.remove('active');
+                deleteBookForm.classList.remove('active');
+                viewAllBooksForm.classList.remove('active');
+                batchDeleteForm.classList.remove('active');
+                importDataForm.classList.remove('active');
+            });
+            
+            batchDeleteBtn.addEventListener('click', function() {
+                batchDeleteForm.classList.toggle('active');
+                addBookForm.classList.remove('active');
+                deleteBookForm.classList.remove('active');
+                viewAllBooksForm.classList.remove('active');
+                batchUploadForm.classList.remove('active');
+                importDataForm.classList.remove('active');
+                updateBatchDeletePreview();
             });
             
             exportDataBtn.addEventListener('click', exportData);
@@ -1204,6 +1799,9 @@
                 importDataForm.classList.toggle('active');
                 addBookForm.classList.remove('active');
                 deleteBookForm.classList.remove('active');
+                viewAllBooksForm.classList.remove('active');
+                batchUploadForm.classList.remove('active');
+                batchDeleteForm.classList.remove('active');
             });
             
             saveBookBtn.addEventListener('click', addNewBook);
@@ -1218,6 +1816,26 @@
                 deleteBookForm.classList.remove('active');
                 deleteSearchInput.value = '';
                 deleteSearchResults.innerHTML = '';
+            });
+            
+            closeViewAllBtn.addEventListener('click', function() {
+                viewAllBooksForm.classList.remove('active');
+            });
+            
+            cancelBatchUploadBtn.addEventListener('click', function() {
+                batchUploadForm.classList.remove('active');
+                batchUploadFile.value = '';
+                batchUploadText.value = '';
+                batchPreview.style.display = 'none';
+                batchStats.textContent = '';
+            });
+            
+            cancelBatchDeleteBtn.addEventListener('click', function() {
+                batchDeleteForm.classList.remove('active');
+                batchDeleteLocation.value = '';
+                batchDeleteKeyword.value = '';
+                batchDeletePreview.style.display = 'none';
+                batchDeleteStats.textContent = '';
             });
             
             confirmImportBtn.addEventListener('click', importNewData);
